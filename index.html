@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代企业 · 对外展示页</title>
+    <!-- 使用柔和、现代的字体与图标库 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafbfc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1rem;
+        }
+
+        /* 头部与导航 (简单干净) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0 2rem 0;
+            border-bottom: 1px solid #e9edf2;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-bar {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            background: #ffffffc0;
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+
+        .contact-item i {
+            color: #2563eb;
+            width: 1.2rem;
+            font-size: 1rem;
+        }
+
+        .contact-item span[contenteditable="true"] {
+            min-width: 90px;
+            display: inline-block;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            transition: background 0.1s ease;
+            cursor: text;
+        }
+
+        .contact-item span[contenteditable="true"]:hover {
+            background: #f1f5f9;
+        }
+
+        .contact-item span[contenteditable="true"]:focus {
+            outline: 2px solid #2563eb60;
+            background: white;
+        }
+
+        /* 主卡片 */
+        .card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -8px rgba(0,34,64,0.1);
+            padding: 2.5rem;
+            margin: 2rem 0 2.5rem 0;
+            border: 1px solid #ffffff50;
+        }
+
+        /* 公司介绍区域 — 完全可编辑 */
+        .about-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4b5563;
+        }
+
+        .section-label i {
+            color: #2563eb;
+            font-size: 1.4rem;
+        }
+
+        .editable-area {
+            background: #f8fafd;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.15s;
+            font-size: 1.05rem;
+        }
+
+        .editable-area[contenteditable="true"] {
+            background: white;
+            border-color: #94a3b8;
+            box-shadow: 0 4px 12px rgba(0,98,204,0.05);
+        }
+
+        .editable-area[contenteditable="true"]:focus {
+            outline: 2px solid #2563eb;
+            border-color: transparent;
+            background: #ffffff;
+        }
+
+        .editable-area p {
+            margin-bottom: 1rem;
+        }
+
+        .editable-area p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 产品相册 — 可插入照片 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f7;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -8px rgba(0,68,128,0.1);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #eef2f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #5f6c80;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            cursor: pointer;
+            border-bottom: 1px dashed #b9c7da;
+            position: relative;
+        }
+
+        .image-placeholder i {
+            font-size: 2.4rem;
+            color: #8b9bb5;
+            margin-bottom: 8px;
+        }
+
+        .image-placeholder .small-hint {
+            font-size: 0.75rem;
+            background: #dbeafe;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            color: #1e4f8a;
+        }
+
+        .product-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            display: block;
+            background: #f1f5f9;
+        }
+
+        .product-info {
+            padding: 1rem 1rem 1.2rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .product-title span[contenteditable="true"] {
+            font-size: 1rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+        }
+
+        .product-title span[contenteditable="true"]:hover {
+            background: #f1f5f9;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #54657e;
+            margin-top: 4px;
+        }
+
+        /* 联系方式卡片 (综合展示) */
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            background: #f0f4fe;
+            border-radius: 28px;
+            padding: 2rem 2.5rem;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid #ccdfff;
+        }
+
+        .contact-block {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1 1 180px;
+        }
+
+        .contact-block i {
+            font-size: 2rem;
+            color: #2563eb;
+            background: white;
+            width: 3.2rem;
+            height: 3.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60%;
+            box-shadow: 0 8px 16px -8px #2650b0a0;
+        }
+
+        .contact-data {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #475569;
+        }
+
+        .contact-value[contenteditable="true"] {
+            font-weight: 600;
+            font-size: 1.15rem;
+            line-height: 1.4;
+            border-radius: 12px;
+            padding: 0.2rem 0.5rem 0.2rem 0;
+            cursor: text;
+        }
+
+        .contact-value[contenteditable="true"]:hover {
+            background: #ffffffb0;
+        }
+
+        .contact-value[contenteditable="true"]:focus {
+            outline: 2px solid #3b82f6;
+            background: white;
+            padding: 0.2rem 0.5rem;
+        }
+
+        /* 提示栏 & 脚注 */
+        .edit-notice {
+            background: #dbeafe;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.9rem;
+            color: #1e4585;
+            margin: 0.5rem 0 1rem;
+            border: 1px solid #a9c9ff;
+        }
+
+        .edit-notice i {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #7e8b9d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e8f0;
+            padding-top: 2rem;
+        }
+
+        .footer a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* 图片上传按钮样式 */
+        .upload-btn {
+            background: white;
+            border: 1px solid #b9ccf0;
+            color: #1e4f8a;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .upload-btn:hover {
+            background: #e2eeff;
+        }
+
+        /* 隐藏原始input */
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航 + 快速联系方式 (完全可编辑) -->
+        <div class="navbar">
+            <div class="logo">⟐ 远界科技</div>
+            <div class="contact-bar">
+                <!-- 每个联系方式均可直接点击修改 -->
+                <div class="contact-item"><i class="fas fa-envelope"></i><span contenteditable="true">hello@yuanjie.com</span></div>
+                <div class="contact-item"><i class="fas fa-phone-alt"></i><span contenteditable="true">400-8820-110</span></div>
+                <div class="contact-item"><i class="fab fa-weixin"></i><span contenteditable="true">yuanjie_2025</span></div>
+            </div>
+        </div>
+
+        <!-- 醒目可编辑提示 -->
+        <div class="edit-notice">
+            <i class="fas fa-pencil-alt"></i> 
+            <span>单击任意文字可修改 —— 公司介绍、联系方式、产品名称均可直接编辑</span>
+        </div>
+
+        <!-- 核心卡片区域 -->
+        <div class="card">
+            <!-- 公司介绍区块 (可随意更改) -->
+            <div class="about-section">
+                <div class="section-label"><i class="fas fa-building"></i> 公司介绍 · 直接编辑</div>
+                <div class="editable-area" contenteditable="true">
+                    <p><strong>远界科技</strong> 成立于2015年，专注于为中小企业提供数字化解决方案。我们相信简洁、可靠的技术能让商业更美好。</p>
+                    <p>总部位于杭州，在深圳、成都设有分支机构。团队由一群充满热情的工程师、设计师和策略专家组成，已服务超过300家品牌客户。</p>
+                    <p>✨ 使命：用直观的工具释放每个团队的创造力。</p>
+                </div>
+            </div>
+
+            <!-- 产品展示 — 可插入图片、可修改标题说明 -->
+            <div class="section-label"><i class="fas fa-cubes"></i> 产品照片 · 点击下方图标上传</div>
+            <div class="product-grid" id="productGrid">
+                <!-- 产品卡片 1 -->
+                <div class="product-card">
+                    <div class="image-placeholder" data-card="0">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="small-hint">点击或拖放照片</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">数据看板 Pro</span></div>
+                        <div class="product-desc" contenteditable="true">实时可视化报表，支持多源接入</div>
+                    </div>
+                </div>
+                <!-- 产品卡片 2 -->
+                <div class="product-card">
+                    <div class="image-placeholder" data-card="1">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="small-hint">点击上传照片</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">智联 CRM</span></div>
+                        <div class="product-desc" contenteditable="true">客户管理 + 销售自动化，轻量高效</div>
+                    </div>
+                </div>
+                <!-- 产品卡片 3 -->
+                <div class="product-card">
+                    <div class="image-placeholder" data-card="2">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="small-hint">点击插入照片</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">物联边缘网关</span></div>
+                        <div class="product-desc" contenteditable="true">工业级硬件，本地数据处理</div>
+                    </div>
+                </div>
+                <!-- 产品卡片 4 (预留) -->
+                <div class="product-card">
+                    <div class="image-placeholder" data-card="3">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="small-hint">点击上传</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">AI 客服助手</span></div>
+                        <div class="product-desc" contenteditable="true">智能问答，7x24小时自动响应</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 显式照片上传说明 (灵活，点击占位符即触发) -->
+        </div>
+
+        <!-- 底部完整联系方式 (大卡片展示，同时可编辑) -->
+        <div class="contact-grid">
+            <div class="contact-block">
+                <i class="fas fa-envelope"></i>
+                <div class="contact-data">
+                    <span class="contact-label">电子邮件</span>
+                    <span class="contact-value" contenteditable="true">business@yuanjie.tech</span>
+                </div>
+            </div>
+            <div class="contact-block">
+                <i class="fas fa-phone"></i>
+                <div class="contact-data">
+                    <span class="contact-label">电话</span>
+                    <span class="contact-value" contenteditable="true">0571-8823 9921</span>
+                </div>
+            </div>
+            <div class="contact-block">
+                <i class="fab fa-weixin"></i>
+                <div class="contact-data">
+                    <span class="contact-label">微信</span>
+                    <span class="contact-value" contenteditable="true">yuanjie_tech</span>
+                </div>
+            </div>
+            <div class="contact-block">
+                <i class="fas fa-clock"></i>
+                <div class="contact-data">
+                    <span class="contact-label">客服时间</span>
+                    <span class="contact-value" contenteditable="true">9:00 - 21:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 脚注 (外部访问说明) -->
+        <div class="footer">
+            ⚡ 可公开访问的公司页 · 所有灰色文字均可直接点按编辑 <br> 
+            <span style="opacity:0.5;">点击产品图片上的图标可上传真实照片 (jpg/png)</span>
+        </div>
+    </div>
+
+    <!-- 隐藏的全局文件上传input (用于捕获图片) -->
+    <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" class="hidden-input">
+
+    <script>
+        (function() {
+            // 让所有 contenteditable 区域编辑更顺手 (无额外功能)
+            // 图片上传逻辑: 点击任何一个 .image-placeholder 弹出文件选择，并将图片放入对应的卡片
+            const productGrid = document.getElementById('productGrid');
+            const fileInput = document.getElementById('imageUpload');
+            let activeCardIndex = null; // 当前点击的是哪个卡片占位符
+
+            // 监听所有图片占位符的点击
+            function initImagePlaceholders() {
+                const placeholders = document.querySelectorAll('.image-placeholder');
+                placeholders.forEach((placeholder, idx) => {
+                    // 移除之前可能存在的事件监听，使用新监听 (简单处理，避免重复)
+                    placeholder.removeEventListener('click', placeholderClickHandler);
+                    placeholder.addEventListener('click', placeholderClickHandler);
+                });
+            }
+
+            function placeholderClickHandler(e) {
+                e.stopPropagation(); // 防止意外冒泡
+                // 获取当前卡片索引 (通过data-card)
+                const cardDiv = e.currentTarget;
+                const index = cardDiv.getAttribute('data-card'); 
+                if (index !== null) {
+                    activeCardIndex = parseInt(index, 10);
+                    // 触发文件上传
+                    fileInput.click();
+                } else {
+                    // 后备：查找父级或使用索引
+                    const placeholders = document.querySelectorAll('.image-placeholder');
+                    const idx = Array.from(placeholders).indexOf(cardDiv);
+                    if (idx !== -1) activeCardIndex = idx;
+                    fileInput.click();
+                }
+            }
+
+            // 当用户选择文件后
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file || activeCardIndex === null) return;
+
+                // 检查是否为图片
+                if (!file.type.startsWith('image/')) {
+                    alert('请选择一个图片文件 (jpg, png, 等)');
+                    fileInput.value = ''; // 清空
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageDataUrl = e.target.result;
+                    // 找到对应的卡片占位符
+                    const placeholders = document.querySelectorAll('.image-placeholder');
+                    if (activeCardIndex >= 0 && activeCardIndex < placeholders.length) {
+                        const placeholder = placeholders[activeCardIndex];
+                        // 将占位符内的内容替换为 <img src="..."> 
+                        // 但需要保留外层点击上传的功能。但占位符变成图片后，不能覆盖点击区域。
+                        // 更稳健的做法：保留占位符但内部展示图片，或者将占位符变成图片容器。
+                        // 我们在这里将占位符的内容替换为一个<img>标签，但仍然保留点击上传的能力（再次点击触发）。
+                        // 但要注意，占位符的data-card保留，且点击区域依然有效。
+                        // 但用户可能想再次替换图片，点击图片也应触发上传。所以占位符包裹的图片也可以点击。
+                        // 我们直接将占位符的背景/内容改为图片。
+                        // 方法：清空内部，放入一个<img> 并隐藏图标。
+                        placeholder.innerHTML = ''; // 移除所有子元素
+                        const img = document.createElement('img');
+                        img.src = imageDataUrl;
+                        img.alt = '产品照片';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'cover';
+                        img.style.aspectRatio = '1/1';
+                        // 确保点击图片仍然触发父级上传（事件代理在placeholder上）
+                        placeholder.appendChild(img);
+                        // 也可以加一个小小的提示角标 (可选，不必须)
+                        const overlayHint = document.createElement('div');
+                        overlayHint.style.position = 'absolute';
+                        overlayHint.style.bottom = '4px';
+                        overlayHint.style.right = '4px';
+                        overlayHint.style.background = '#2563ebdd';
+                        overlayHint.style.color = 'white';
+                        overlayHint.style.borderRadius = '20px';
+                        overlayHint.style.padding = '2px 8px';
+                        overlayHint.style.fontSize = '0.7rem';
+                        overlayHint.style.backdropFilter = 'blur(2px)';
+                        overlayHint.innerText = '替换';
+                        overlayHint.style.pointerEvents = 'none'; // 点击穿透到placeholder
+                        placeholder.style.position = 'relative';
+                        placeholder.appendChild(overlayHint);
+                    }
+                    // 清空input，允许再次上传同一文件
+                    fileInput.value = '';
+                    activeCardIndex = null;
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            // 初始化监听 (也适用于后来动态添加，但本页面静态)
+            initImagePlaceholders();
+
+            // 额外保险：如果用户拖放图片到占位符 (增强体验但非必须，暂且省略。可额外监听dragover/drop，但为了简洁，只使用点击上传)
+            // 但我们可以加一个小的便利：点击后如果上传取消，重置activeCardIndex
+            fileInput.addEventListener('cancel', function() {
+                activeCardIndex = null;
+            });
+
+            // 对于所有可编辑区域，浏览器原生支持，无需额外代码。但可能想保留更改。
+
+            // 可选：简单例子中，如果有新的图片上传后想保持占位符data-card不变（已经保留）
+            // 如果需要支持再次点击新图片替换，完美。
+
+            // 另外，如果占位符已经被图片填充，再次点击placeholder（现在包含img）会再次触发上传，并替换图片。符合预期。
+
+            // 为了保证每个卡片占位符都有data-card属性（手动添加）
+            // 已经在html中为4个占位符添加了 data-card="0" 到 "3"，完美。
+
+            // 如果用户想添加全新的卡片？可以在html中手动复制，但保持简单，此页面已经展示了4个可编辑产品。
+            // 足以满足“插入公司产品照片”。
+        })();
+    </script>
+
+    <!-- 额外的细微调整：确保所有contenteditable不会因为回车导致意外插入div，交给浏览器默认行为。 用户友好 -->
+</body>
+</html>
