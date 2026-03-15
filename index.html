@@ -47,17 +47,23 @@
         }
 
         .logo-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
             object-fit: cover;
-            cursor: pointer;
+            cursor: default;
             border: 2px solid #e2e8f0;
             transition: all 0.2s;
         }
 
-        .logo-image:hover {
+        .logo-image.admin-mode {
+            cursor: pointer;
             border-color: #2563eb;
+        }
+
+        .logo-image.admin-mode:hover {
+            border-color: #7c3aed;
+            transform: scale(1.02);
         }
 
         .logo-text {
@@ -164,10 +170,16 @@
             background: #ef4444;
             color: white;
             border: none;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .admin-logout:hover {
+            background: #dc2626;
         }
 
         /* 密码模态框 */
@@ -204,7 +216,7 @@
 
         .password-input {
             width: 100%;
-            padding: 0.8rem;
+            padding: 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
             font-size: 1rem;
@@ -223,11 +235,12 @@
 
         .modal-buttons button {
             flex: 1;
-            padding: 0.8rem;
+            padding: 1rem;
             border: none;
             border-radius: 10px;
             font-weight: 500;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .modal-submit {
@@ -235,16 +248,24 @@
             color: white;
         }
 
+        .modal-submit:hover {
+            background: #1d4ed8;
+        }
+
         .modal-cancel {
             background: #e2e8f0;
             color: #1e293b;
+        }
+
+        .modal-cancel:hover {
+            background: #cbd5e1;
         }
 
         /* 密码保护标志 */
         .protected-badge {
             background: #fef3c7;
             color: #92400e;
-            padding: 0.3rem 1rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 30px;
             font-size: 0.9rem;
             display: inline-flex;
@@ -257,20 +278,32 @@
             color: #f59e0b;
         }
 
-        /* 编辑状态样式 */
-        .editable {
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .editable[contenteditable="true"] {
-            background-color: #fff9e6;
+        /* 编辑状态样式 - 重要：确保可编辑元素有明显视觉提示 */
+        .admin-mode .editable[contenteditable="true"] {
+            background-color: #fff9e6 !important;
             border: 2px dashed #2563eb !important;
             cursor: text;
+            padding: 0.3rem 0.5rem;
+            border-radius: 8px;
         }
 
-        .editable[contenteditable="true"]:hover {
-            background-color: #fef9c3;
+        .admin-mode .editable[contenteditable="true"]:hover {
+            background-color: #fef9c3 !important;
+        }
+
+        .admin-mode .image-placeholder {
+            cursor: pointer !important;
+            border: 2px dashed #2563eb;
+        }
+
+        .admin-mode .qr-code-image {
+            cursor: pointer !important;
+            border: 2px dashed #2563eb;
+        }
+
+        .admin-mode .logo-image {
+            cursor: pointer !important;
+            border: 2px dashed #2563eb;
         }
 
         /* 主卡片 */
@@ -318,7 +351,7 @@
         .bilingual-content {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .bilingual-item {
@@ -330,11 +363,11 @@
         .lang-tag {
             font-size: 0.8rem;
             font-weight: 600;
-            padding: 0.2rem 0.6rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 20px;
             background: #e2e8f0;
             color: #475569;
-            min-width: 40px;
+            min-width: 50px;
             text-align: center;
         }
 
@@ -351,7 +384,7 @@
         /* 产品相册 */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 1.5rem;
         }
@@ -382,9 +415,9 @@
             color: #5f6c80;
             font-size: 0.9rem;
             transition: background 0.2s;
-            cursor: pointer;
-            border-bottom: 1px dashed #b9c7da;
+            border-bottom: 1px solid #e2e8f0;
             position: relative;
+            cursor: default;
         }
 
         .image-placeholder i {
@@ -409,42 +442,38 @@
         }
 
         .product-info {
-            padding: 1rem 1rem 1.2rem;
+            padding: 1.2rem;
         }
 
         .product-title {
             font-weight: 600;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
-        .product-title-zh, .product-title-en {
-            font-size: 1rem;
-            padding: 0.1rem 0.3rem;
-            border-radius: 8px;
+        .product-title-zh {
+            font-size: 1.1rem;
             display: block;
+            margin-bottom: 0.2rem;
         }
 
         .product-title-en {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #64748b;
-            margin-top: 0.2rem;
+            display: block;
         }
 
-        .product-desc-zh, .product-desc-en {
-            font-size: 0.85rem;
-            color: #54657e;
-            margin-top: 4px;
-            padding: 0.1rem 0.3rem;
-            border-radius: 8px;
+        .product-desc-zh {
+            font-size: 0.9rem;
+            color: #334155;
+            margin-top: 0.5rem;
             display: block;
         }
 
         .product-desc-en {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #64748b;
+            margin-top: 0.2rem;
+            display: block;
         }
 
         /* 删除产品按钮 */
@@ -454,8 +483,8 @@
             right: 10px;
             background: #ef4444;
             color: white;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -480,8 +509,8 @@
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
-            padding: 1rem;
-            border-radius: 20px;
+            padding: 1rem 2rem;
+            border-radius: 30px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
@@ -524,12 +553,12 @@
             font-size: 2rem;
             color: #2563eb;
             background: white;
-            width: 3.2rem;
-            height: 3.2rem;
+            width: 3.5rem;
+            height: 3.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 60%;
+            border-radius: 50%;
             box-shadow: 0 8px 16px -8px #2650b0a0;
         }
 
@@ -541,35 +570,28 @@
         .contact-label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.5px;
             color: #475569;
+            margin-bottom: 0.2rem;
         }
 
         .contact-value {
             font-weight: 600;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             line-height: 1.4;
-            border-radius: 12px;
-            padding: 0.2rem 0.5rem 0.2rem 0;
+            border-radius: 8px;
+            padding: 0.2rem 0.5rem;
         }
 
         .contact-value[contenteditable="true"] {
             cursor: text;
-        }
-
-        .contact-value[contenteditable="true"]:hover {
-            background: #ffffffb0;
-        }
-
-        .contact-value[contenteditable="true"]:focus {
-            outline: 2px solid #3b82f6;
-            background: white;
-            padding: 0.2rem 0.5rem;
+            background-color: #fff9e6;
+            border: 2px dashed #2563eb;
         }
 
         /* 微信二维码区域 */
         .qr-code-container {
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             position: relative;
         }
 
@@ -577,15 +599,20 @@
             max-width: 100px;
             max-height: 100px;
             border-radius: 10px;
-            cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: default;
         }
 
         .qr-upload-hint {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: #2563eb;
-            margin-top: 0.2rem;
+            margin-top: 0.3rem;
+            cursor: default;
+            padding: 0.2rem 0.5rem;
+            background: #dbeafe;
+            border-radius: 20px;
+            display: inline-block;
         }
 
         /* 隐藏文件输入 */
@@ -624,6 +651,14 @@
         [data-lang="en"] .zh-only {
             display: none;
         }
+
+        /* 管理员模式下的额外提示 */
+        .admin-mode .edit-hint {
+            display: block;
+            color: #2563eb;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body data-lang="zh">
@@ -643,7 +678,9 @@
                     <button class="lang-btn" id="langEn">English</button>
                 </div>
                 <button class="admin-login-btn" id="adminLoginBtn">
-                    <i class="fas fa-lock"></i> <span class="zh-only">管理员登录</span><span class="en-only">Admin Login</span>
+                    <i class="fas fa-lock"></i> 
+                    <span class="zh-only">管理员登录</span>
+                    <span class="en-only">Admin Login</span>
                 </button>
             </div>
         </div>
@@ -661,8 +698,8 @@
                 <div>
                     <h3><i class="fas fa-crown"></i> <span class="zh-only">管理员模式</span><span class="en-only">Admin Mode</span></h3>
                     <p style="color: #64748b; font-size: 0.9rem;">
-                        <span class="zh-only">您现在可以编辑所有内容</span>
-                        <span class="en-only">You can now edit all content</span>
+                        <span class="zh-only">您现在可以编辑所有内容，点击任何带边框的区域即可修改</span>
+                        <span class="en-only">You can now edit all content, click any bordered area to edit</span>
                     </p>
                 </div>
                 <button class="admin-logout" id="adminLogoutBtn">
@@ -695,7 +732,7 @@
                 <div class="editable-area bilingual-content">
                     <div class="bilingual-item">
                         <span class="lang-tag zh">中文</span>
-                        <div id="companyIntroZh" contenteditable="false" class="editable">
+                        <div id="companyIntroZh" class="editable" contenteditable="false">
                             <p><strong>瑞玉泽机电设备有限公司</strong> 成立于2010年，是一家专业从事机电设备研发、生产和销售的高新技术企业。</p>
                             <p>公司主要产品包括：工业自动化设备、精密机械配件、智能控制系统等，产品远销欧美、东南亚等20多个国家和地区。</p>
                             <p>✨ 企业愿景：成为全球领先的机电设备解决方案提供商。</p>
@@ -703,7 +740,7 @@
                     </div>
                     <div class="bilingual-item">
                         <span class="lang-tag en">English</span>
-                        <div id="companyIntroEn" contenteditable="false" class="editable">
+                        <div id="companyIntroEn" class="editable" contenteditable="false">
                             <p><strong>Ruiyuze Electromechanical Equipment Co., Ltd.</strong> founded in 2010, is a high-tech enterprise specializing in R&D, production and sales of electromechanical equipment.</p>
                             <p>Main products include: industrial automation equipment, precision mechanical parts, intelligent control systems, exported to more than 20 countries.</p>
                             <p>✨ Vision: To become a leading global provider of electromechanical solutions.</p>
@@ -738,7 +775,7 @@
                     <div class="contact-data">
                         <span class="contact-label zh-only">电子邮件</span>
                         <span class="contact-label en-only">Email</span>
-                        <span class="contact-value" id="contactEmail" contenteditable="false">ryz.sales@ryz.com</span>
+                        <span class="contact-value editable" id="contactEmail" contenteditable="false">ryz.sales@ryz.com</span>
                     </div>
                 </div>
                 <div class="contact-block">
@@ -746,7 +783,7 @@
                     <div class="contact-data">
                         <span class="contact-label zh-only">电话</span>
                         <span class="contact-label en-only">Phone</span>
-                        <span class="contact-value" id="contactPhone" contenteditable="false">+86 512-8823 9921</span>
+                        <span class="contact-value editable" id="contactPhone" contenteditable="false">+86 512-8823 9921</span>
                     </div>
                 </div>
                 <div class="contact-block">
@@ -768,7 +805,7 @@
                     <div class="contact-data">
                         <span class="contact-label zh-only">客服时间</span>
                         <span class="contact-label en-only">Service Hours</span>
-                        <span class="contact-value" id="contactHours" contenteditable="false">9:00 - 18:00 (Mon-Fri)</span>
+                        <span class="contact-value editable" id="contactHours" contenteditable="false">9:00 - 18:00 (Mon-Fri)</span>
                     </div>
                 </div>
             </div>
@@ -796,8 +833,6 @@
             let currentLang = 'zh';
             let products = [];
             let activeImageCardIndex = null;
-            let qrImageData = null;
-            let logoImageData = null;
 
             // DOM 元素
             const adminLoginBtn = document.getElementById('adminLoginBtn');
@@ -823,6 +858,16 @@
             const companyLogo = document.getElementById('companyLogo');
             const langZh = document.getElementById('langZh');
             const langEn = document.getElementById('langEn');
+            const body = document.body;
+
+            // 所有可编辑元素的数组
+            const editableElements = [
+                companyIntroZh,
+                companyIntroEn,
+                contactEmail,
+                contactPhone,
+                contactHours
+            ];
 
             // 初始化产品数据
             const defaultProducts = [
@@ -862,34 +907,41 @@
 
             // 加载保存的数据
             function loadSavedData() {
+                // 产品数据
                 const savedProducts = localStorage.getItem('ryz_products');
                 if (savedProducts) {
-                    products = JSON.parse(savedProducts);
+                    try {
+                        products = JSON.parse(savedProducts);
+                    } catch (e) {
+                        products = defaultProducts;
+                    }
                 } else {
                     products = defaultProducts;
                 }
                 
+                // 二维码
                 const savedQR = localStorage.getItem('ryz_wechat_qr');
                 if (savedQR) {
-                    qrImageData = savedQR;
                     wechatQRImage.src = savedQR;
                     wechatQRImage.style.display = 'block';
                     qrUploadHint.style.display = 'none';
                 }
 
+                // Logo
                 const savedLogo = localStorage.getItem('ryz_logo');
                 if (savedLogo) {
-                    logoImageData = savedLogo;
                     companyLogo.src = savedLogo;
                     companyLogo.style.display = 'block';
                 }
 
+                // 公司介绍
                 const savedIntroZh = localStorage.getItem('ryz_intro_zh');
                 if (savedIntroZh) companyIntroZh.innerHTML = savedIntroZh;
                 
                 const savedIntroEn = localStorage.getItem('ryz_intro_en');
                 if (savedIntroEn) companyIntroEn.innerHTML = savedIntroEn;
                 
+                // 联系方式
                 const savedEmail = localStorage.getItem('ryz_email');
                 if (savedEmail) contactEmail.textContent = savedEmail;
                 
@@ -898,6 +950,21 @@
                 
                 const savedHours = localStorage.getItem('ryz_hours');
                 if (savedHours) contactHours.textContent = savedHours;
+            }
+
+            // 保存所有数据
+            function saveAllData() {
+                // 公司介绍
+                localStorage.setItem('ryz_intro_zh', companyIntroZh.innerHTML);
+                localStorage.setItem('ryz_intro_en', companyIntroEn.innerHTML);
+                
+                // 联系方式
+                localStorage.setItem('ryz_email', contactEmail.textContent);
+                localStorage.setItem('ryz_phone', contactPhone.textContent);
+                localStorage.setItem('ryz_hours', contactHours.textContent);
+                
+                // 产品数据
+                saveProducts();
             }
 
             // 保存产品数据
@@ -912,6 +979,9 @@
                     const productCard = createProductCard(product, index);
                     productGrid.appendChild(productCard);
                 });
+                
+                // 重新绑定图片上传事件
+                bindImagePlaceholders();
             }
 
             // 创建产品卡片
@@ -930,22 +1000,6 @@
                     img.src = product.image;
                     img.alt = product.titleZh;
                     imageDiv.appendChild(img);
-                    
-                    if (isAdmin) {
-                        const overlayHint = document.createElement('div');
-                        overlayHint.style.position = 'absolute';
-                        overlayHint.style.bottom = '4px';
-                        overlayHint.style.right = '4px';
-                        overlayHint.style.background = '#2563ebdd';
-                        overlayHint.style.color = 'white';
-                        overlayHint.style.borderRadius = '20px';
-                        overlayHint.style.padding = '2px 8px';
-                        overlayHint.style.fontSize = '0.7rem';
-                        overlayHint.innerText = currentLang === 'zh' ? '替换' : 'Replace';
-                        overlayHint.style.pointerEvents = 'none';
-                        imageDiv.style.position = 'relative';
-                        imageDiv.appendChild(overlayHint);
-                    }
                 } else {
                     imageDiv.innerHTML = `
                         <i class="fas fa-cloud-upload-alt"></i>
@@ -957,6 +1011,7 @@
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'product-info';
                 
+                // 标题
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'product-title';
                 
@@ -973,12 +1028,13 @@
                 titleDiv.appendChild(titleZh);
                 titleDiv.appendChild(titleEn);
                 
-                const descZh = document.createElement('div');
+                // 描述
+                const descZh = document.createElement('span');
                 descZh.className = 'product-desc-zh editable';
                 descZh.contentEditable = isAdmin;
                 descZh.textContent = product.descZh;
                 
-                const descEn = document.createElement('div');
+                const descEn = document.createElement('span');
                 descEn.className = 'product-desc-en editable';
                 descEn.contentEditable = isAdmin;
                 descEn.textContent = product.descEn;
@@ -1008,10 +1064,11 @@
             // 删除产品
             function deleteProduct(index) {
                 if (!isAdmin) return;
-                products.splice(index, 1);
-                saveProducts();
-                renderProducts();
-                initImagePlaceholders();
+                if (confirm(currentLang === 'zh' ? '确定要删除这个产品吗？' : 'Are you sure to delete this product?')) {
+                    products.splice(index, 1);
+                    saveProducts();
+                    renderProducts();
+                }
             }
 
             // 添加新产品
@@ -1023,269 +1080,4 @@
                     titleZh: '新产品',
                     titleEn: 'New Product',
                     descZh: '点击编辑产品描述',
-                    descEn: 'Click to edit description'
-                };
-                products.push(newProduct);
-                saveProducts();
-                renderProducts();
-                initImagePlaceholders();
-            }
-
-            // 设置编辑状态
-            function setEditMode(enabled) {
-                isAdmin = enabled;
-                
-                // 更新可编辑元素
-                const editableElements = [
-                    companyIntroZh,
-                    companyIntroEn,
-                    contactEmail,
-                    contactPhone,
-                    contactHours
-                ];
-                
-                editableElements.forEach(el => {
-                    el.contentEditable = enabled;
-                    if (enabled) {
-                        el.classList.add('editable');
-                    } else {
-                        el.classList.remove('editable');
-                    }
-                });
-                
-                // 显示/隐藏管理员面板和添加产品按钮
-                adminPanel.classList.toggle('visible', enabled);
-                addProductContainer.style.display = enabled ? 'block' : 'none';
-                
-                // 重新渲染产品
-                renderProducts();
-                
-                // 初始化图片上传监听
-                initImagePlaceholders();
-                
-                // 处理二维码和Logo区域
-                if (enabled) {
-                    wechatQRImage.style.cursor = 'pointer';
-                    companyLogo.style.cursor = 'pointer';
-                    qrUploadHint.style.display = qrImageData ? 'none' : 'block';
-                } else {
-                    wechatQRImage.style.cursor = 'default';
-                    companyLogo.style.cursor = 'default';
-                    qrUploadHint.style.display = 'none';
-                }
-            }
-
-            // 设置语言
-            function setLanguage(lang) {
-                currentLang = lang;
-                document.body.dataset.lang = lang;
-                
-                // 更新语言按钮状态
-                langZh.classList.toggle('active', lang === 'zh');
-                langEn.classList.toggle('active', lang === 'en');
-                
-                // 重新渲染产品以更新提示文字
-                renderProducts();
-                initImagePlaceholders();
-            }
-
-            // 初始化图片占位符点击事件
-            function initImagePlaceholders() {
-                const placeholders = document.querySelectorAll('.image-placeholder');
-                placeholders.forEach((placeholder) => {
-                    placeholder.removeEventListener('click', placeholderClickHandler);
-                    if (isAdmin) {
-                        placeholder.addEventListener('click', placeholderClickHandler);
-                        placeholder.style.cursor = 'pointer';
-                    } else {
-                        placeholder.style.cursor = 'default';
-                    }
-                });
-            }
-
-            // 图片占位符点击处理
-            function placeholderClickHandler(e) {
-                if (!isAdmin) return;
-                e.stopPropagation();
-                const cardDiv = e.currentTarget;
-                const index = cardDiv.getAttribute('data-card');
-                if (index !== null) {
-                    activeImageCardIndex = parseInt(index, 10);
-                    imageUpload.click();
-                }
-            }
-
-            // 保存编辑的内容
-            function saveEdits() {
-                // 保存公司介绍
-                localStorage.setItem('ryz_intro_zh', companyIntroZh.innerHTML);
-                localStorage.setItem('ryz_intro_en', companyIntroEn.innerHTML);
-                
-                // 保存联系方式
-                localStorage.setItem('ryz_email', contactEmail.textContent);
-                localStorage.setItem('ryz_phone', contactPhone.textContent);
-                localStorage.setItem('ryz_hours', contactHours.textContent);
-                
-                // 保存产品信息
-                const productCards = document.querySelectorAll('.product-card');
-                productCards.forEach((card, index) => {
-                    if (index < products.length) {
-                        const titleZh = card.querySelector('.product-title-zh');
-                        const titleEn = card.querySelector('.product-title-en');
-                        const descZh = card.querySelector('.product-desc-zh');
-                        const descEn = card.querySelector('.product-desc-en');
-                        
-                        if (titleZh) products[index].titleZh = titleZh.textContent;
-                        if (titleEn) products[index].titleEn = titleEn.textContent;
-                        if (descZh) products[index].descZh = descZh.textContent;
-                        if (descEn) products[index].descEn = descEn.textContent;
-                    }
-                });
-                
-                saveProducts();
-            }
-
-            // 事件监听
-
-            // 语言切换
-            langZh.addEventListener('click', () => setLanguage('zh'));
-            langEn.addEventListener('click', () => setLanguage('en'));
-
-            // 管理员登录按钮
-            adminLoginBtn.addEventListener('click', () => {
-                passwordModal.classList.add('visible');
-                passwordInput.value = '';
-                passwordInput.focus();
-            });
-
-            // 提交密码
-            submitPassword.addEventListener('click', () => {
-                if (passwordInput.value === ADMIN_PASSWORD) {
-                    passwordModal.classList.remove('visible');
-                    setEditMode(true);
-                } else {
-                    alert(currentLang === 'zh' ? '密码错误！' : 'Incorrect password!');
-                    passwordInput.value = '';
-                }
-            });
-
-            // 取消按钮
-            cancelPassword.addEventListener('click', () => {
-                passwordModal.classList.remove('visible');
-            });
-
-            // 回车提交
-            passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    submitPassword.click();
-                }
-            });
-
-            // 退出登录
-            adminLogoutBtn.addEventListener('click', () => {
-                setEditMode(false);
-            });
-
-            // 添加产品按钮
-            addProductBtn.addEventListener('click', addProduct);
-
-            // Logo上传
-            companyLogo.addEventListener('click', () => {
-                if (isAdmin) logoUpload.click();
-            });
-
-            logoUpload.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file || !isAdmin) return;
-
-                if (!file.type.startsWith('image/')) {
-                    alert(currentLang === 'zh' ? '请选择一个图片文件' : 'Please select an image file');
-                    logoUpload.value = '';
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    logoImageData = e.target.result;
-                    companyLogo.src = logoImageData;
-                    companyLogo.style.display = 'block';
-                    localStorage.setItem('ryz_logo', logoImageData);
-                    logoUpload.value = '';
-                };
-                reader.readAsDataURL(file);
-            });
-
-            // 图片上传处理
-            imageUpload.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file || activeImageCardIndex === null || !isAdmin) return;
-
-                if (!file.type.startsWith('image/')) {
-                    alert(currentLang === 'zh' ? '请选择一个图片文件' : 'Please select an image file');
-                    imageUpload.value = '';
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageDataUrl = e.target.result;
-                    if (activeImageCardIndex >= 0 && activeImageCardIndex < products.length) {
-                        products[activeImageCardIndex].image = imageDataUrl;
-                        saveProducts();
-                        renderProducts();
-                        initImagePlaceholders();
-                    }
-                    imageUpload.value = '';
-                    activeImageCardIndex = null;
-                };
-                reader.readAsDataURL(file);
-            });
-
-            // 二维码上传处理
-            qrUpload.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file || !isAdmin) return;
-
-                if (!file.type.startsWith('image/')) {
-                    alert(currentLang === 'zh' ? '请选择一个图片文件作为二维码' : 'Please select an image for QR code');
-                    qrUpload.value = '';
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    qrImageData = e.target.result;
-                    wechatQRImage.src = qrImageData;
-                    wechatQRImage.style.display = 'block';
-                    qrUploadHint.style.display = 'none';
-                    localStorage.setItem('ryz_wechat_qr', qrImageData);
-                    qrUpload.value = '';
-                };
-                reader.readAsDataURL(file);
-            });
-
-            // 点击二维码区域上传
-            wechatQRImage.addEventListener('click', () => {
-                if (isAdmin) qrUpload.click();
-            });
-
-            qrUploadHint.addEventListener('click', () => {
-                if (isAdmin) qrUpload.click();
-            });
-
-            // 监听内容变化，自动保存
-            document.addEventListener('blur', function(e) {
-                if (e.target.contentEditable === 'true' && isAdmin) {
-                    saveEdits();
-                }
-            }, true);
-
-            // 初始化
-            loadSavedData();
-            renderProducts();
-            setLanguage('zh');
-            initImagePlaceholders();
-        })();
-    </script>
-</body>
-</html>
+                    descEn: 'Click to edit
