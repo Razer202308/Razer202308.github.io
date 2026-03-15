@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>现代企业 · 对外展示页</title>
+    <title>瑞玉泽机电 · RYZ Electromechanical</title>
     <!-- 使用柔和、现代的字体与图标库 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
             padding: 2rem 2rem 1rem;
         }
 
-        /* 头部与导航 (简单干净) */
+        /* 头部与导航 */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -40,7 +40,27 @@
             gap: 1rem;
         }
 
-        .logo {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .logo-image:hover {
+            border-color: #2563eb;
+        }
+
+        .logo-text {
             font-size: 1.8rem;
             font-weight: 600;
             letter-spacing: -0.02em;
@@ -50,47 +70,207 @@
             background-clip: text;
         }
 
-        .contact-bar {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            background: #ffffffc0;
-            backdrop-filter: blur(4px);
-            padding: 0.5rem 1.2rem;
-            border-radius: 60px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        .logo-text-sub {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 0.2rem;
         }
 
-        .contact-item {
+        /* 语言切换按钮 */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.3rem;
+            border-radius: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            color: #64748b;
+        }
+
+        .lang-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* 管理员登录按钮 */
+        .admin-login-btn {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.95rem;
-            color: #2c3e50;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        .contact-item i {
+        .admin-login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .admin-login-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* 管理员面板 */
+        .admin-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0 2rem 0;
+            border: 2px solid #2563eb;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2);
+            display: none;
+        }
+
+        .admin-panel.visible {
+            display: block;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
             color: #2563eb;
-            width: 1.2rem;
-            font-size: 1rem;
         }
 
-        .contact-item span[contenteditable="true"] {
-            min-width: 90px;
-            display: inline-block;
-            padding: 0.2rem 0.4rem;
-            border-radius: 12px;
-            transition: background 0.1s ease;
+        .admin-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .admin-header i {
+            font-size: 2rem;
+        }
+
+        .admin-logout {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* 密码模态框 */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .password-modal.visible {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1.5rem;
+            color: #2563eb;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .modal-submit {
+            background: #2563eb;
+            color: white;
+        }
+
+        .modal-cancel {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        /* 密码保护标志 */
+        .protected-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .protected-badge i {
+            color: #f59e0b;
+        }
+
+        /* 编辑状态样式 */
+        .editable {
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .editable[contenteditable="true"] {
+            background-color: #fff9e6;
+            border: 2px dashed #2563eb !important;
             cursor: text;
         }
 
-        .contact-item span[contenteditable="true"]:hover {
-            background: #f1f5f9;
-        }
-
-        .contact-item span[contenteditable="true"]:focus {
-            outline: 2px solid #2563eb60;
-            background: white;
+        .editable[contenteditable="true"]:hover {
+            background-color: #fef9c3;
         }
 
         /* 主卡片 */
@@ -103,7 +283,7 @@
             border: 1px solid #ffffff50;
         }
 
-        /* 公司介绍区域 — 完全可编辑 */
+        /* 公司介绍区域 */
         .about-section {
             margin-bottom: 3rem;
         }
@@ -134,27 +314,41 @@
             font-size: 1.05rem;
         }
 
-        .editable-area[contenteditable="true"] {
-            background: white;
-            border-color: #94a3b8;
-            box-shadow: 0 4px 12px rgba(0,98,204,0.05);
+        /* 双语内容容器 */
+        .bilingual-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .editable-area[contenteditable="true"]:focus {
-            outline: 2px solid #2563eb;
-            border-color: transparent;
-            background: #ffffff;
+        .bilingual-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
 
-        .editable-area p {
-            margin-bottom: 1rem;
+        .lang-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            background: #e2e8f0;
+            color: #475569;
+            min-width: 40px;
+            text-align: center;
         }
 
-        .editable-area p:last-child {
-            margin-bottom: 0;
+        .lang-tag.zh {
+            background: #2563eb;
+            color: white;
         }
 
-        /* 产品相册 — 可插入照片 */
+        .lang-tag.en {
+            background: #7c3aed;
+            color: white;
+        }
+
+        /* 产品相册 */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -169,6 +363,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.02);
             border: 1px solid #edf2f7;
             transition: transform 0.2s;
+            position: relative;
         }
 
         .product-card:hover {
@@ -211,7 +406,6 @@
             aspect-ratio: 1/1;
             object-fit: cover;
             display: block;
-            background: #f1f5f9;
         }
 
         .product-info {
@@ -220,29 +414,93 @@
 
         .product-title {
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.3rem;
         }
 
-        .product-title span[contenteditable="true"] {
+        .product-title-zh, .product-title-en {
             font-size: 1rem;
             padding: 0.1rem 0.3rem;
             border-radius: 8px;
+            display: block;
         }
 
-        .product-title span[contenteditable="true"]:hover {
-            background: #f1f5f9;
+        .product-title-en {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.2rem;
         }
 
-        .product-desc {
+        .product-desc-zh, .product-desc-en {
             font-size: 0.85rem;
             color: #54657e;
             margin-top: 4px;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            display: block;
         }
 
-        /* 联系方式卡片 (综合展示) */
+        .product-desc-en {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* 删除产品按钮 */
+        .delete-product {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            border: none;
+            z-index: 10;
+        }
+
+        .product-card:hover .delete-product {
+            opacity: 1;
+        }
+
+        .delete-product i {
+            font-size: 1rem;
+        }
+
+        /* 添加产品按钮 */
+        .add-product-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            transition: transform 0.2s;
+        }
+
+        .add-product-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .add-product-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* 联系方式区域 */
         .contact-grid {
             display: flex;
             flex-wrap: wrap;
@@ -287,12 +545,15 @@
             color: #475569;
         }
 
-        .contact-value[contenteditable="true"] {
+        .contact-value {
             font-weight: 600;
             font-size: 1.15rem;
             line-height: 1.4;
             border-radius: 12px;
             padding: 0.2rem 0.5rem 0.2rem 0;
+        }
+
+        .contact-value[contenteditable="true"] {
             cursor: text;
         }
 
@@ -306,7 +567,33 @@
             padding: 0.2rem 0.5rem;
         }
 
-        /* 提示栏 & 脚注 */
+        /* 微信二维码区域 */
+        .qr-code-container {
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .qr-code-image {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .qr-upload-hint {
+            font-size: 0.7rem;
+            color: #2563eb;
+            margin-top: 0.2rem;
+        }
+
+        /* 隐藏文件输入 */
+        .hidden-input {
+            display: none;
+        }
+
+        /* 提示信息 */
         .edit-notice {
             background: #dbeafe;
             padding: 0.8rem 1.5rem;
@@ -320,10 +607,6 @@
             border: 1px solid #a9c9ff;
         }
 
-        .edit-notice i {
-            font-size: 1.1rem;
-        }
-
         .footer {
             text-align: center;
             margin-top: 3rem;
@@ -333,237 +616,322 @@
             padding-top: 2rem;
         }
 
-        .footer a {
-            color: #2563eb;
-            text-decoration: none;
+        /* 语言特定显示 */
+        [data-lang="zh"] .en-only {
+            display: none;
         }
 
-        /* 图片上传按钮样式 */
-        .upload-btn {
-            background: white;
-            border: 1px solid #b9ccf0;
-            color: #1e4f8a;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-top: 6px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .upload-btn:hover {
-            background: #e2eeff;
-        }
-
-        /* 隐藏原始input */
-        .hidden-input {
+        [data-lang="en"] .zh-only {
             display: none;
         }
     </style>
 </head>
-<body>
+<body data-lang="zh">
     <div class="container">
-        <!-- 导航 + 快速联系方式 (完全可编辑) -->
+        <!-- 导航 + 语言切换 + 管理员登录 -->
         <div class="navbar">
-            <div class="logo">⟐ 远界科技</div>
-            <div class="contact-bar">
-                <!-- 每个联系方式均可直接点击修改 -->
-                <div class="contact-item"><i class="fas fa-envelope"></i><span contenteditable="true">hello@yuanjie.com</span></div>
-                <div class="contact-item"><i class="fas fa-phone-alt"></i><span contenteditable="true">400-8820-110</span></div>
-                <div class="contact-item"><i class="fab fa-weixin"></i><span contenteditable="true">yuanjie_2025</span></div>
+            <div class="logo-container">
+                <img src="" alt="Company Logo" class="logo-image" id="companyLogo" style="display: none;">
+                <div>
+                    <div class="logo-text" id="companyName">瑞玉泽机电设备有限公司</div>
+                    <div class="logo-text-sub" id="companyNameEn">Ruiyuze Electromechanical Equipment Co., Ltd.</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <div class="language-switcher">
+                    <button class="lang-btn active" id="langZh">中文</button>
+                    <button class="lang-btn" id="langEn">English</button>
+                </div>
+                <button class="admin-login-btn" id="adminLoginBtn">
+                    <i class="fas fa-lock"></i> <span class="zh-only">管理员登录</span><span class="en-only">Admin Login</span>
+                </button>
             </div>
         </div>
 
-        <!-- 醒目可编辑提示 -->
-        <div class="edit-notice">
-            <i class="fas fa-pencil-alt"></i> 
-            <span>单击任意文字可修改 —— 公司介绍、联系方式、产品名称均可直接编辑</span>
+        <!-- 密码保护标志 -->
+        <div class="protected-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span class="zh-only">此页面受密码保护，仅管理员可编辑</span>
+            <span class="en-only">Password protected, admin only</span>
         </div>
 
-        <!-- 核心卡片区域 -->
+        <!-- 管理员面板 -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <div>
+                    <h3><i class="fas fa-crown"></i> <span class="zh-only">管理员模式</span><span class="en-only">Admin Mode</span></h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">
+                        <span class="zh-only">您现在可以编辑所有内容</span>
+                        <span class="en-only">You can now edit all content</span>
+                    </p>
+                </div>
+                <button class="admin-logout" id="adminLogoutBtn">
+                    <span class="zh-only">退出登录</span><span class="en-only">Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 密码模态框 -->
+        <div class="password-modal" id="passwordModal">
+            <div class="modal-content">
+                <h3><i class="fas fa-lock" style="margin-right: 10px;"></i><span class="zh-only">管理员验证</span><span class="en-only">Admin Verification</span></h3>
+                <input type="password" class="password-input" id="passwordInput" placeholder="请输入密码 / Enter password">
+                <div class="modal-buttons">
+                    <button class="modal-submit" id="submitPassword"><span class="zh-only">确认</span><span class="en-only">Confirm</span></button>
+                    <button class="modal-cancel" id="cancelPassword"><span class="zh-only">取消</span><span class="en-only">Cancel</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心内容区域 -->
         <div class="card">
-            <!-- 公司介绍区块 (可随意更改) -->
+            <!-- 公司介绍区块 -->
             <div class="about-section">
-                <div class="section-label"><i class="fas fa-building"></i> 公司介绍 · 直接编辑</div>
-                <div class="editable-area" contenteditable="true">
-                    <p><strong>远界科技</strong> 成立于2015年，专注于为中小企业提供数字化解决方案。我们相信简洁、可靠的技术能让商业更美好。</p>
-                    <p>总部位于杭州，在深圳、成都设有分支机构。团队由一群充满热情的工程师、设计师和策略专家组成，已服务超过300家品牌客户。</p>
-                    <p>✨ 使命：用直观的工具释放每个团队的创造力。</p>
+                <div class="section-label">
+                    <i class="fas fa-building"></i>
+                    <span class="zh-only">公司介绍</span>
+                    <span class="en-only">About Us</span>
+                </div>
+                <div class="editable-area bilingual-content">
+                    <div class="bilingual-item">
+                        <span class="lang-tag zh">中文</span>
+                        <div id="companyIntroZh" contenteditable="false" class="editable">
+                            <p><strong>瑞玉泽机电设备有限公司</strong> 成立于2010年，是一家专业从事机电设备研发、生产和销售的高新技术企业。</p>
+                            <p>公司主要产品包括：工业自动化设备、精密机械配件、智能控制系统等，产品远销欧美、东南亚等20多个国家和地区。</p>
+                            <p>✨ 企业愿景：成为全球领先的机电设备解决方案提供商。</p>
+                        </div>
+                    </div>
+                    <div class="bilingual-item">
+                        <span class="lang-tag en">English</span>
+                        <div id="companyIntroEn" contenteditable="false" class="editable">
+                            <p><strong>Ruiyuze Electromechanical Equipment Co., Ltd.</strong> founded in 2010, is a high-tech enterprise specializing in R&D, production and sales of electromechanical equipment.</p>
+                            <p>Main products include: industrial automation equipment, precision mechanical parts, intelligent control systems, exported to more than 20 countries.</p>
+                            <p>✨ Vision: To become a leading global provider of electromechanical solutions.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 产品展示 — 可插入图片、可修改标题说明 -->
-            <div class="section-label"><i class="fas fa-cubes"></i> 产品照片 · 点击下方图标上传</div>
+            <!-- 产品展示区域 -->
+            <div class="section-label">
+                <i class="fas fa-cubes"></i>
+                <span class="zh-only">产品展示</span>
+                <span class="en-only">Products</span>
+            </div>
             <div class="product-grid" id="productGrid">
-                <!-- 产品卡片 1 -->
-                <div class="product-card">
-                    <div class="image-placeholder" data-card="0">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span class="small-hint">点击或拖放照片</span>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">数据看板 Pro</span></div>
-                        <div class="product-desc" contenteditable="true">实时可视化报表，支持多源接入</div>
-                    </div>
-                </div>
-                <!-- 产品卡片 2 -->
-                <div class="product-card">
-                    <div class="image-placeholder" data-card="1">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span class="small-hint">点击上传照片</span>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">智联 CRM</span></div>
-                        <div class="product-desc" contenteditable="true">客户管理 + 销售自动化，轻量高效</div>
-                    </div>
-                </div>
-                <!-- 产品卡片 3 -->
-                <div class="product-card">
-                    <div class="image-placeholder" data-card="2">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span class="small-hint">点击插入照片</span>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">物联边缘网关</span></div>
-                        <div class="product-desc" contenteditable="true">工业级硬件，本地数据处理</div>
-                    </div>
-                </div>
-                <!-- 产品卡片 4 (预留) -->
-                <div class="product-card">
-                    <div class="image-placeholder" data-card="3">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span class="small-hint">点击上传</span>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title"><i class="fas fa-tag" style="color:#3b82f6;"></i> <span contenteditable="true">AI 客服助手</span></div>
-                        <div class="product-desc" contenteditable="true">智能问答，7x24小时自动响应</div>
-                    </div>
-                </div>
+                <!-- 产品卡片将通过JavaScript动态生成 -->
+            </div>
+            
+            <!-- 添加产品按钮（仅管理员可见） -->
+            <div style="text-align: center; display: none;" id="addProductContainer">
+                <button class="add-product-btn" id="addProductBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="zh-only">添加新产品</span>
+                    <span class="en-only">Add Product</span>
+                </button>
             </div>
 
-            <!-- 显式照片上传说明 (灵活，点击占位符即触发) -->
-        </div>
-
-        <!-- 底部完整联系方式 (大卡片展示，同时可编辑) -->
-        <div class="contact-grid">
-            <div class="contact-block">
-                <i class="fas fa-envelope"></i>
-                <div class="contact-data">
-                    <span class="contact-label">电子邮件</span>
-                    <span class="contact-value" contenteditable="true">business@yuanjie.tech</span>
+            <!-- 联系方式区域 -->
+            <div class="contact-grid">
+                <div class="contact-block">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-data">
+                        <span class="contact-label zh-only">电子邮件</span>
+                        <span class="contact-label en-only">Email</span>
+                        <span class="contact-value" id="contactEmail" contenteditable="false">ryz.sales@ryz.com</span>
+                    </div>
                 </div>
-            </div>
-            <div class="contact-block">
-                <i class="fas fa-phone"></i>
-                <div class="contact-data">
-                    <span class="contact-label">电话</span>
-                    <span class="contact-value" contenteditable="true">0571-8823 9921</span>
+                <div class="contact-block">
+                    <i class="fas fa-phone"></i>
+                    <div class="contact-data">
+                        <span class="contact-label zh-only">电话</span>
+                        <span class="contact-label en-only">Phone</span>
+                        <span class="contact-value" id="contactPhone" contenteditable="false">+86 512-8823 9921</span>
+                    </div>
                 </div>
-            </div>
-            <div class="contact-block">
-                <i class="fab fa-weixin"></i>
-                <div class="contact-data">
-                    <span class="contact-label">微信</span>
-                    <span class="contact-value" contenteditable="true">yuanjie_tech</span>
+                <div class="contact-block">
+                    <i class="fab fa-weixin"></i>
+                    <div class="contact-data">
+                        <span class="contact-label zh-only">微信</span>
+                        <span class="contact-label en-only">WeChat</span>
+                        <div class="qr-code-container" id="wechatQRContainer">
+                            <img src="" alt="微信二维码" class="qr-code-image" id="wechatQRImage" style="display: none;">
+                            <div class="qr-upload-hint" id="qrUploadHint" style="display: none;">
+                                <span class="zh-only">点击上传二维码</span>
+                                <span class="en-only">Click to upload QR</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="contact-block">
-                <i class="fas fa-clock"></i>
-                <div class="contact-data">
-                    <span class="contact-label">客服时间</span>
-                    <span class="contact-value" contenteditable="true">9:00 - 21:00</span>
+                <div class="contact-block">
+                    <i class="fas fa-clock"></i>
+                    <div class="contact-data">
+                        <span class="contact-label zh-only">客服时间</span>
+                        <span class="contact-label en-only">Service Hours</span>
+                        <span class="contact-value" id="contactHours" contenteditable="false">9:00 - 18:00 (Mon-Fri)</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 脚注 (外部访问说明) -->
+        <!-- 脚注 -->
         <div class="footer">
-            ⚡ 可公开访问的公司页 · 所有灰色文字均可直接点按编辑 <br> 
-            <span style="opacity:0.5;">点击产品图片上的图标可上传真实照片 (jpg/png)</span>
+            <span class="zh-only">© 2024 瑞玉泽机电设备有限公司 版权所有</span>
+            <span class="en-only">© 2024 Ruiyuze Electromechanical Equipment Co., Ltd. All rights reserved.</span>
         </div>
     </div>
 
-    <!-- 隐藏的全局文件上传input (用于捕获图片) -->
-    <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" class="hidden-input">
+    <!-- 隐藏的文件上传输入 -->
+    <input type="file" id="imageUpload" accept="image/*" class="hidden-input">
+    <input type="file" id="qrUpload" accept="image/*" class="hidden-input">
+    <input type="file" id="logoUpload" accept="image/*" class="hidden-input">
 
     <script>
         (function() {
-            // 让所有 contenteditable 区域编辑更顺手 (无额外功能)
-            // 图片上传逻辑: 点击任何一个 .image-placeholder 弹出文件选择，并将图片放入对应的卡片
-            const productGrid = document.getElementById('productGrid');
-            const fileInput = document.getElementById('imageUpload');
-            let activeCardIndex = null; // 当前点击的是哪个卡片占位符
+            // 管理员密码
+            const ADMIN_PASSWORD = 'Ruiyuze2023!';
+            
+            // 状态变量
+            let isAdmin = false;
+            let currentLang = 'zh';
+            let products = [];
+            let activeImageCardIndex = null;
+            let qrImageData = null;
+            let logoImageData = null;
 
-            // 监听所有图片占位符的点击
-            function initImagePlaceholders() {
-                const placeholders = document.querySelectorAll('.image-placeholder');
-                placeholders.forEach((placeholder, idx) => {
-                    // 移除之前可能存在的事件监听，使用新监听 (简单处理，避免重复)
-                    placeholder.removeEventListener('click', placeholderClickHandler);
-                    placeholder.addEventListener('click', placeholderClickHandler);
+            // DOM 元素
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const adminPanel = document.getElementById('adminPanel');
+            const passwordModal = document.getElementById('passwordModal');
+            const passwordInput = document.getElementById('passwordInput');
+            const submitPassword = document.getElementById('submitPassword');
+            const cancelPassword = document.getElementById('cancelPassword');
+            const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+            const companyIntroZh = document.getElementById('companyIntroZh');
+            const companyIntroEn = document.getElementById('companyIntroEn');
+            const contactEmail = document.getElementById('contactEmail');
+            const contactPhone = document.getElementById('contactPhone');
+            const contactHours = document.getElementById('contactHours');
+            const productGrid = document.getElementById('productGrid');
+            const addProductContainer = document.getElementById('addProductContainer');
+            const addProductBtn = document.getElementById('addProductBtn');
+            const imageUpload = document.getElementById('imageUpload');
+            const qrUpload = document.getElementById('qrUpload');
+            const logoUpload = document.getElementById('logoUpload');
+            const wechatQRImage = document.getElementById('wechatQRImage');
+            const qrUploadHint = document.getElementById('qrUploadHint');
+            const companyLogo = document.getElementById('companyLogo');
+            const langZh = document.getElementById('langZh');
+            const langEn = document.getElementById('langEn');
+
+            // 初始化产品数据
+            const defaultProducts = [
+                {
+                    id: 'p1',
+                    image: null,
+                    titleZh: '工业自动化设备',
+                    titleEn: 'Industrial Automation Equipment',
+                    descZh: '高性能自动化生产线，提高生产效率',
+                    descEn: 'High-performance automated production lines'
+                },
+                {
+                    id: 'p2',
+                    image: null,
+                    titleZh: '精密机械配件',
+                    titleEn: 'Precision Mechanical Parts',
+                    descZh: '高精度加工，适用于各类机械设备',
+                    descEn: 'High precision machining for various machinery'
+                },
+                {
+                    id: 'p3',
+                    image: null,
+                    titleZh: '智能控制系统',
+                    titleEn: 'Intelligent Control Systems',
+                    descZh: 'PLC控制系统，工业物联网解决方案',
+                    descEn: 'PLC control systems, IIoT solutions'
+                },
+                {
+                    id: 'p4',
+                    image: null,
+                    titleZh: '伺服电机',
+                    titleEn: 'Servo Motors',
+                    descZh: '高性能伺服电机，精准控制',
+                    descEn: 'High-performance servo motors, precise control'
+                }
+            ];
+
+            // 加载保存的数据
+            function loadSavedData() {
+                const savedProducts = localStorage.getItem('ryz_products');
+                if (savedProducts) {
+                    products = JSON.parse(savedProducts);
+                } else {
+                    products = defaultProducts;
+                }
+                
+                const savedQR = localStorage.getItem('ryz_wechat_qr');
+                if (savedQR) {
+                    qrImageData = savedQR;
+                    wechatQRImage.src = savedQR;
+                    wechatQRImage.style.display = 'block';
+                    qrUploadHint.style.display = 'none';
+                }
+
+                const savedLogo = localStorage.getItem('ryz_logo');
+                if (savedLogo) {
+                    logoImageData = savedLogo;
+                    companyLogo.src = savedLogo;
+                    companyLogo.style.display = 'block';
+                }
+
+                const savedIntroZh = localStorage.getItem('ryz_intro_zh');
+                if (savedIntroZh) companyIntroZh.innerHTML = savedIntroZh;
+                
+                const savedIntroEn = localStorage.getItem('ryz_intro_en');
+                if (savedIntroEn) companyIntroEn.innerHTML = savedIntroEn;
+                
+                const savedEmail = localStorage.getItem('ryz_email');
+                if (savedEmail) contactEmail.textContent = savedEmail;
+                
+                const savedPhone = localStorage.getItem('ryz_phone');
+                if (savedPhone) contactPhone.textContent = savedPhone;
+                
+                const savedHours = localStorage.getItem('ryz_hours');
+                if (savedHours) contactHours.textContent = savedHours;
+            }
+
+            // 保存产品数据
+            function saveProducts() {
+                localStorage.setItem('ryz_products', JSON.stringify(products));
+            }
+
+            // 渲染产品网格
+            function renderProducts() {
+                productGrid.innerHTML = '';
+                products.forEach((product, index) => {
+                    const productCard = createProductCard(product, index);
+                    productGrid.appendChild(productCard);
                 });
             }
 
-            function placeholderClickHandler(e) {
-                e.stopPropagation(); // 防止意外冒泡
-                // 获取当前卡片索引 (通过data-card)
-                const cardDiv = e.currentTarget;
-                const index = cardDiv.getAttribute('data-card'); 
-                if (index !== null) {
-                    activeCardIndex = parseInt(index, 10);
-                    // 触发文件上传
-                    fileInput.click();
-                } else {
-                    // 后备：查找父级或使用索引
-                    const placeholders = document.querySelectorAll('.image-placeholder');
-                    const idx = Array.from(placeholders).indexOf(cardDiv);
-                    if (idx !== -1) activeCardIndex = idx;
-                    fileInput.click();
-                }
-            }
+            // 创建产品卡片
+            function createProductCard(product, index) {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.dataset.index = index;
 
-            // 当用户选择文件后
-            fileInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file || activeCardIndex === null) return;
-
-                // 检查是否为图片
-                if (!file.type.startsWith('image/')) {
-                    alert('请选择一个图片文件 (jpg, png, 等)');
-                    fileInput.value = ''; // 清空
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageDataUrl = e.target.result;
-                    // 找到对应的卡片占位符
-                    const placeholders = document.querySelectorAll('.image-placeholder');
-                    if (activeCardIndex >= 0 && activeCardIndex < placeholders.length) {
-                        const placeholder = placeholders[activeCardIndex];
-                        // 将占位符内的内容替换为 <img src="..."> 
-                        // 但需要保留外层点击上传的功能。但占位符变成图片后，不能覆盖点击区域。
-                        // 更稳健的做法：保留占位符但内部展示图片，或者将占位符变成图片容器。
-                        // 我们在这里将占位符的内容替换为一个<img>标签，但仍然保留点击上传的能力（再次点击触发）。
-                        // 但要注意，占位符的data-card保留，且点击区域依然有效。
-                        // 但用户可能想再次替换图片，点击图片也应触发上传。所以占位符包裹的图片也可以点击。
-                        // 我们直接将占位符的背景/内容改为图片。
-                        // 方法：清空内部，放入一个<img> 并隐藏图标。
-                        placeholder.innerHTML = ''; // 移除所有子元素
-                        const img = document.createElement('img');
-                        img.src = imageDataUrl;
-                        img.alt = '产品照片';
-                        img.style.width = '100%';
-                        img.style.height = '100%';
-                        img.style.objectFit = 'cover';
-                        img.style.aspectRatio = '1/1';
-                        // 确保点击图片仍然触发父级上传（事件代理在placeholder上）
-                        placeholder.appendChild(img);
-                        // 也可以加一个小小的提示角标 (可选，不必须)
+                // 图片占位符
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image-placeholder';
+                imageDiv.dataset.card = index;
+                
+                if (product.image) {
+                    const img = document.createElement('img');
+                    img.src = product.image;
+                    img.alt = product.titleZh;
+                    imageDiv.appendChild(img);
+                    
+                    if (isAdmin) {
                         const overlayHint = document.createElement('div');
                         overlayHint.style.position = 'absolute';
                         overlayHint.style.bottom = '4px';
@@ -573,44 +941,140 @@
                         overlayHint.style.borderRadius = '20px';
                         overlayHint.style.padding = '2px 8px';
                         overlayHint.style.fontSize = '0.7rem';
-                        overlayHint.style.backdropFilter = 'blur(2px)';
-                        overlayHint.innerText = '替换';
-                        overlayHint.style.pointerEvents = 'none'; // 点击穿透到placeholder
-                        placeholder.style.position = 'relative';
-                        placeholder.appendChild(overlayHint);
+                        overlayHint.innerText = currentLang === 'zh' ? '替换' : 'Replace';
+                        overlayHint.style.pointerEvents = 'none';
+                        imageDiv.style.position = 'relative';
+                        imageDiv.appendChild(overlayHint);
                     }
-                    // 清空input，允许再次上传同一文件
-                    fileInput.value = '';
-                    activeCardIndex = null;
+                } else {
+                    imageDiv.innerHTML = `
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="small-hint">${isAdmin ? (currentLang === 'zh' ? '点击上传照片' : 'Click to upload') : ''}</span>
+                    `;
+                }
+
+                // 产品信息
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'product-info';
+                
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'product-title';
+                
+                const titleZh = document.createElement('span');
+                titleZh.className = 'product-title-zh editable';
+                titleZh.contentEditable = isAdmin;
+                titleZh.textContent = product.titleZh;
+                
+                const titleEn = document.createElement('span');
+                titleEn.className = 'product-title-en editable';
+                titleEn.contentEditable = isAdmin;
+                titleEn.textContent = product.titleEn;
+                
+                titleDiv.appendChild(titleZh);
+                titleDiv.appendChild(titleEn);
+                
+                const descZh = document.createElement('div');
+                descZh.className = 'product-desc-zh editable';
+                descZh.contentEditable = isAdmin;
+                descZh.textContent = product.descZh;
+                
+                const descEn = document.createElement('div');
+                descEn.className = 'product-desc-en editable';
+                descEn.contentEditable = isAdmin;
+                descEn.textContent = product.descEn;
+                
+                infoDiv.appendChild(titleDiv);
+                infoDiv.appendChild(descZh);
+                infoDiv.appendChild(descEn);
+                
+                card.appendChild(imageDiv);
+                card.appendChild(infoDiv);
+
+                // 删除按钮（仅管理员可见）
+                if (isAdmin) {
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.className = 'delete-product';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        deleteProduct(index);
+                    };
+                    card.appendChild(deleteBtn);
+                }
+
+                return card;
+            }
+
+            // 删除产品
+            function deleteProduct(index) {
+                if (!isAdmin) return;
+                products.splice(index, 1);
+                saveProducts();
+                renderProducts();
+                initImagePlaceholders();
+            }
+
+            // 添加新产品
+            function addProduct() {
+                if (!isAdmin) return;
+                const newProduct = {
+                    id: 'p' + Date.now(),
+                    image: null,
+                    titleZh: '新产品',
+                    titleEn: 'New Product',
+                    descZh: '点击编辑产品描述',
+                    descEn: 'Click to edit description'
                 };
+                products.push(newProduct);
+                saveProducts();
+                renderProducts();
+                initImagePlaceholders();
+            }
 
-                reader.readAsDataURL(file);
-            });
+            // 设置编辑状态
+            function setEditMode(enabled) {
+                isAdmin = enabled;
+                
+                // 更新可编辑元素
+                const editableElements = [
+                    companyIntroZh,
+                    companyIntroEn,
+                    contactEmail,
+                    contactPhone,
+                    contactHours
+                ];
+                
+                editableElements.forEach(el => {
+                    el.contentEditable = enabled;
+                    if (enabled) {
+                        el.classList.add('editable');
+                    } else {
+                        el.classList.remove('editable');
+                    }
+                });
+                
+                // 显示/隐藏管理员面板和添加产品按钮
+                adminPanel.classList.toggle('visible', enabled);
+                addProductContainer.style.display = enabled ? 'block' : 'none';
+                
+                // 重新渲染产品
+                renderProducts();
+                
+                // 初始化图片上传监听
+                initImagePlaceholders();
+                
+                // 处理二维码和Logo区域
+                if (enabled) {
+                    wechatQRImage.style.cursor = 'pointer';
+                    companyLogo.style.cursor = 'pointer';
+                    qrUploadHint.style.display = qrImageData ? 'none' : 'block';
+                } else {
+                    wechatQRImage.style.cursor = 'default';
+                    companyLogo.style.cursor = 'default';
+                    qrUploadHint.style.display = 'none';
+                }
+            }
 
-            // 初始化监听 (也适用于后来动态添加，但本页面静态)
-            initImagePlaceholders();
-
-            // 额外保险：如果用户拖放图片到占位符 (增强体验但非必须，暂且省略。可额外监听dragover/drop，但为了简洁，只使用点击上传)
-            // 但我们可以加一个小的便利：点击后如果上传取消，重置activeCardIndex
-            fileInput.addEventListener('cancel', function() {
-                activeCardIndex = null;
-            });
-
-            // 对于所有可编辑区域，浏览器原生支持，无需额外代码。但可能想保留更改。
-
-            // 可选：简单例子中，如果有新的图片上传后想保持占位符data-card不变（已经保留）
-            // 如果需要支持再次点击新图片替换，完美。
-
-            // 另外，如果占位符已经被图片填充，再次点击placeholder（现在包含img）会再次触发上传，并替换图片。符合预期。
-
-            // 为了保证每个卡片占位符都有data-card属性（手动添加）
-            // 已经在html中为4个占位符添加了 data-card="0" 到 "3"，完美。
-
-            // 如果用户想添加全新的卡片？可以在html中手动复制，但保持简单，此页面已经展示了4个可编辑产品。
-            // 足以满足“插入公司产品照片”。
-        })();
-    </script>
-
-    <!-- 额外的细微调整：确保所有contenteditable不会因为回车导致意外插入div，交给浏览器默认行为。 用户友好 -->
-</body>
-</html>
+            // 设置语言
+            function setLanguage(lang) {
+                currentLang =
