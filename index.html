@@ -1080,4 +1080,280 @@
                     titleZh: '新产品',
                     titleEn: 'New Product',
                     descZh: '点击编辑产品描述',
-                    descEn: 'Click to edit
+                    descEn: 'Click to edit description'
+                };
+                products.push(newProduct);
+                saveProducts();
+                renderProducts();
+            }
+
+            // 设置编辑状态 - 核心修复函数
+            function setEditMode(enabled) {
+                isAdmin = enabled;
+                
+                // 添加或移除管理员模式类名到body
+                if (enabled) {
+                    body.classList.add('admin-mode');
+                } else {
+                    body.classList.remove('admin-mode');
+                }
+                
+                // 设置所有可编辑元素的contenteditable属性
+                editableElements.forEach(el => {
+                    if (el) {
+                        el.contentEditable = enabled;
+                    }
+                });
+                
+                // 显示/隐藏管理员面板
+                if (enabled) {
+                    adminPanel.classList.add('visible');
+                    addProductContainer.style.display = 'block';
+                } else {
+                    adminPanel.classList.remove('visible');
+                    addProductContainer.style.display = 'none';
+                }
+                
+                // 重新渲染产品（更新可编辑状态）
+                renderProducts();
+                
+                // 更新上传区域的样式和功能
+                updateUploadElements(enabled);
+                
+                // 保存当前状态到localStorage（可选）
+                localStorage.setItem('ryz_admin_mode', enabled);
+                
+                console.log('管理员模式:', enabled ? '开启' : '关闭');
+            }
+
+            // 更新上传元素的样式和功能
+            function updateUploadElements(enabled) {
+                // Logo
+                if (enabled) {
+                    companyLogo.classList.add('admin-mode');
+                    companyLogo.style.cursor = 'pointer';
+                } else {
+                    companyLogo.classList.remove('admin-mode');
+                    companyLogo.style.cursor = 'default';
+                }
+                
+                // 二维码
+                if (enabled) {
+                    wechatQRImage.style.cursor = 'pointer';
+                    if (!qrImageData) {
+                        qrUploadHint.style.display = 'block';
+                    }
+                } else {
+                    wechatQRImage.style.cursor = 'default';
+                    qrUploadHint.style.display = 'none';
+                }
+            }
+
+            // 绑定图片占位符点击事件
+            function bindImagePlaceholders() {
+                const placeholders = document.querySelectorAll('.image-placeholder');
+                placeholders.forEach((placeholder) => {
+                    placeholder.onclick = (e) => {
+                        if (!isAdmin) return;
+                        e.stopPropagation();
+                        const index = placeholder.getAttribute('data-card');
+                        if (index !== null) {
+                            activeImageCardIndex = parseInt(index, 10);
+                            imageUpload.click();
+                        }
+                    };
+                });
+            }
+
+            // 设置语言
+            function setLanguage(lang) {
+                currentLang = lang;
+                body.dataset.lang = lang;
+                
+                langZh.classList.toggle('active', lang === 'zh');
+                langEn.classList.toggle('active', lang === 'en');
+                
+                // 重新渲染产品以更新提示文字
+                renderProducts();
+                
+                // 更新上传提示文字
+                updateUploadElements(isAdmin);
+            }
+
+            // 事件监听设置
+            function setupEventListeners() {
+                // 语言切换
+                langZh.addEventListener('click', () => setLanguage('zh'));
+                langEn.addEventListener('click', () => setLanguage('en'));
+
+                // 管理员登录按钮
+                adminLoginBtn.addEventListener('click', () => {
+                    passwordModal.classList.add('visible');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                });
+
+                // 提交密码
+                submitPassword.addEventListener('click', () => {
+                    if (passwordInput.value === ADMIN_PASSWORD) {
+                        passwordModal.classList.remove('visible');
+                        setEditMode(true);
+                    } else {
+                        alert(currentLang === 'zh' ? '密码错误！' : 'Incorrect password!');
+                        passwordInput.value = '';
+                    }
+                });
+
+                // 取消按钮
+                cancelPassword.addEventListener('click', () => {
+                    passwordModal.classList.remove('visible');
+                });
+
+                // 回车提交
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        submitPassword.click();
+                    }
+                });
+
+                // 退出登录
+                adminLogoutBtn.addEventListener('click', () => {
+                    setEditMode(false);
+                });
+
+                // 添加产品按钮
+                addProductBtn.addEventListener('click', addProduct);
+
+                // Logo上传
+                companyLogo.addEventListener('click', () => {
+                    if (isAdmin) logoUpload.click();
+                });
+
+                logoUpload.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (!file || !isAdmin) return;
+
+                    if (!file.type.startsWith('image/')) {
+                        alert(currentLang === 'zh' ? '请选择一个图片文件' : 'Please select an image file');
+                        logoUpload.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        companyLogo.src = e.target.result;
+                        companyLogo.style.display = 'block';
+                        localStorage.setItem('ryz_logo', e.target.result);
+                        logoUpload.value = '';
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 产品图片上传
+                imageUpload.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (!file || activeImageCardIndex === null || !isAdmin) return;
+
+                    if (!file.type.startsWith('image/')) {
+                        alert(currentLang === 'zh' ? '请选择一个图片文件' : 'Please select an image file');
+                        imageUpload.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (activeImageCardIndex >= 0 && activeImageCardIndex < products.length) {
+                            products[activeImageCardIndex].image = e.target.result;
+                            saveProducts();
+                            renderProducts();
+                        }
+                        imageUpload.value = '';
+                        activeImageCardIndex = null;
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 二维码上传
+                qrUpload.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (!file || !isAdmin) return;
+
+                    if (!file.type.startsWith('image/')) {
+                        alert(currentLang === 'zh' ? '请选择一个图片文件作为二维码' : 'Please select an image for QR code');
+                        qrUpload.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        wechatQRImage.src = e.target.result;
+                        wechatQRImage.style.display = 'block';
+                        qrUploadHint.style.display = 'none';
+                        localStorage.setItem('ryz_wechat_qr', e.target.result);
+                        qrUpload.value = '';
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 二维码点击
+                wechatQRImage.addEventListener('click', () => {
+                    if (isAdmin) qrUpload.click();
+                });
+
+                qrUploadHint.addEventListener('click', () => {
+                    if (isAdmin) qrUpload.click();
+                });
+
+                // 监听内容变化，自动保存
+                document.addEventListener('blur', function(e) {
+                    if (e.target.classList.contains('editable') && e.target.contentEditable === 'true' && isAdmin) {
+                        saveAllData();
+                    }
+                }, true);
+
+                // 监听输入事件，实时保存
+                document.addEventListener('input', function(e) {
+                    if (e.target.classList.contains('editable') && e.target.contentEditable === 'true' && isAdmin) {
+                        // 实时更新products数组中的对应数据
+                        const card = e.target.closest('.product-card');
+                        if (card) {
+                            const index = parseInt(card.dataset.index);
+                            if (!isNaN(index) && products[index]) {
+                                if (e.target.classList.contains('product-title-zh')) {
+                                    products[index].titleZh = e.target.textContent;
+                                } else if (e.target.classList.contains('product-title-en')) {
+                                    products[index].titleEn = e.target.textContent;
+                                } else if (e.target.classList.contains('product-desc-zh')) {
+                                    products[index].descZh = e.target.textContent;
+                                } else if (e.target.classList.contains('product-desc-en')) {
+                                    products[index].descEn = e.target.textContent;
+                                }
+                                saveProducts();
+                            }
+                        } else {
+                            // 非产品数据，直接保存
+                            saveAllData();
+                        }
+                    }
+                }, true);
+            }
+
+            // 初始化
+            function init() {
+                loadSavedData();
+                renderProducts();
+                setLanguage('zh');
+                setupEventListeners();
+                
+                // 默认不是管理员模式
+                setEditMode(false);
+                
+                console.log('初始化完成');
+            }
+
+            // 启动
+            init();
+        })();
+    </script>
+</body>
+</html>
