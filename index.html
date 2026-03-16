@@ -261,24 +261,7 @@
             background: #cbd5e1;
         }
 
-        /* 密码保护标志 */
-        .protected-badge {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .protected-badge i {
-            color: #f59e0b;
-        }
-
-        /* 编辑状态样式 - 重要：确保可编辑元素有明显视觉提示 */
+        /* 编辑状态样式 */
         .admin-mode .editable[contenteditable="true"] {
             background-color: #fff9e6 !important;
             border: 2px dashed #2563eb !important;
@@ -304,6 +287,14 @@
         .admin-mode .logo-image {
             cursor: pointer !important;
             border: 2px dashed #2563eb;
+        }
+
+        .admin-mode .add-contact-btn {
+            display: inline-flex !important;
+        }
+
+        .admin-mode .delete-contact {
+            display: flex !important;
         }
 
         /* 主卡片 */
@@ -486,18 +477,16 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.2s;
             border: none;
             z-index: 10;
         }
 
         .product-card:hover .delete-product {
-            opacity: 1;
+            display: flex;
         }
 
         .delete-product i {
@@ -529,109 +518,163 @@
             font-size: 1.2rem;
         }
 
-        /* 联系方式区域 */
-        .contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: space-between;
-            background: #f0f4fe;
-            border-radius: 28px;
-            padding: 2rem 2.5rem;
-            margin: 2rem 0 1.5rem;
-            border: 1px solid #ccdfff;
+        /* 联系方式区域 - 新版多联系人 */
+        .contact-section {
+            margin-top: 2rem;
         }
 
-        .contact-block {
+        .contact-category {
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            flex: 1 1 180px;
+            position: relative;
+            border: 1px solid #e2e8f0;
         }
 
-        .contact-block i {
-            font-size: 2rem;
-            color: #2563eb;
+        .contact-item-icon {
+            width: 40px;
+            height: 40px;
             background: white;
-            width: 3.5rem;
-            height: 3.5rem;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            box-shadow: 0 8px 16px -8px #2650b0a0;
+            color: #2563eb;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .contact-data {
-            display: flex;
-            flex-direction: column;
+        .contact-item-content {
+            flex: 1;
         }
 
-        .contact-label {
+        .contact-item-label {
             font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #475569;
+            color: #64748b;
             margin-bottom: 0.2rem;
         }
 
-        .contact-value {
-            font-weight: 600;
-            font-size: 1.1rem;
-            line-height: 1.4;
-            border-radius: 8px;
-            padding: 0.2rem 0.5rem;
+        .contact-item-value {
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        .contact-value[contenteditable="true"] {
-            cursor: text;
+        .contact-item-value.editable[contenteditable="true"] {
             background-color: #fff9e6;
             border: 2px dashed #2563eb;
+            padding: 0.3rem 0.5rem;
+            border-radius: 8px;
         }
 
-        /* 微信二维码区域 */
-        .qr-code-container {
-            margin-top: 0.3rem;
-            position: relative;
+        /* 微信二维码特殊样式 */
+        .wechat-qr-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .qr-code-image {
-            max-width: 100px;
-            max-height: 100px;
+        .wechat-qr-image {
+            width: 80px;
+            height: 80px;
             border-radius: 10px;
+            object-fit: cover;
             border: 2px solid white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             cursor: default;
         }
 
+        .wechat-info {
+            flex: 1;
+        }
+
+        .wechat-id {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
         .qr-upload-hint {
             font-size: 0.8rem;
             color: #2563eb;
-            margin-top: 0.3rem;
-            cursor: default;
-            padding: 0.2rem 0.5rem;
             background: #dbeafe;
+            padding: 0.3rem 1rem;
             border-radius: 20px;
             display: inline-block;
+            cursor: default;
+        }
+
+        /* 添加联系人按钮 */
+        .add-contact-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .add-contact-btn i {
+            font-size: 0.9rem;
+        }
+
+        .add-contact-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* 删除联系人按钮 */
+        .delete-contact {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            font-size: 0.8rem;
+        }
+
+        .contact-item-card:hover .delete-contact {
+            display: flex;
         }
 
         /* 隐藏文件输入 */
         .hidden-input {
             display: none;
-        }
-
-        /* 提示信息 */
-        .edit-notice {
-            background: #dbeafe;
-            padding: 0.8rem 1.5rem;
-            border-radius: 60px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            font-size: 0.9rem;
-            color: #1e4585;
-            margin: 0.5rem 0 1rem;
-            border: 1px solid #a9c9ff;
         }
 
         .footer {
@@ -650,14 +693,6 @@
 
         [data-lang="en"] .zh-only {
             display: none;
-        }
-
-        /* 管理员模式下的额外提示 */
-        .admin-mode .edit-hint {
-            display: block;
-            color: #2563eb;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
         }
     </style>
 </head>
@@ -683,13 +718,6 @@
                     <span class="en-only">Admin Login</span>
                 </button>
             </div>
-        </div>
-
-        <!-- 密码保护标志 -->
-        <div class="protected-badge">
-            <i class="fas fa-shield-alt"></i>
-            <span class="zh-only">此页面受密码保护，仅管理员可编辑</span>
-            <span class="en-only">Password protected, admin only</span>
         </div>
 
         <!-- 管理员面板 -->
@@ -768,45 +796,67 @@
                 </button>
             </div>
 
-            <!-- 联系方式区域 -->
-            <div class="contact-grid">
-                <div class="contact-block">
-                    <i class="fas fa-envelope"></i>
-                    <div class="contact-data">
-                        <span class="contact-label zh-only">电子邮件</span>
-                        <span class="contact-label en-only">Email</span>
-                        <span class="contact-value editable" id="contactEmail" contenteditable="false">ryz.sales@ryz.com</span>
-                    </div>
+            <!-- 联系方式区域 - 新版多联系人 -->
+            <div class="contact-section">
+                <div class="section-label">
+                    <i class="fas fa-address-book"></i>
+                    <span class="zh-only">联系方式</span>
+                    <span class="en-only">Contact Us</span>
                 </div>
-                <div class="contact-block">
-                    <i class="fas fa-phone"></i>
-                    <div class="contact-data">
-                        <span class="contact-label zh-only">电话</span>
-                        <span class="contact-label en-only">Phone</span>
-                        <span class="contact-value editable" id="contactPhone" contenteditable="false">+86 512-8823 9921</span>
+
+                <!-- 邮箱列表 -->
+                <div class="contact-category">
+                    <div class="category-title">
+                        <i class="fas fa-envelope"></i>
+                        <span class="zh-only">邮箱</span>
+                        <span class="en-only">Email</span>
                     </div>
+                    <div class="contact-items" id="emailList"></div>
+                    <button class="add-contact-btn" id="addEmailBtn" data-type="email">
+                        <i class="fas fa-plus"></i>
+                        <span class="zh-only">添加邮箱</span>
+                        <span class="en-only">Add Email</span>
+                    </button>
                 </div>
-                <div class="contact-block">
-                    <i class="fab fa-weixin"></i>
-                    <div class="contact-data">
-                        <span class="contact-label zh-only">微信</span>
-                        <span class="contact-label en-only">WeChat</span>
-                        <div class="qr-code-container" id="wechatQRContainer">
-                            <img src="" alt="微信二维码" class="qr-code-image" id="wechatQRImage" style="display: none;">
-                            <div class="qr-upload-hint" id="qrUploadHint" style="display: none;">
-                                <span class="zh-only">点击上传二维码</span>
-                                <span class="en-only">Click to upload QR</span>
-                            </div>
-                        </div>
+
+                <!-- 电话列表 -->
+                <div class="contact-category">
+                    <div class="category-title">
+                        <i class="fas fa-phone"></i>
+                        <span class="zh-only">电话</span>
+                        <span class="en-only">Phone</span>
                     </div>
+                    <div class="contact-items" id="phoneList"></div>
+                    <button class="add-contact-btn" id="addPhoneBtn" data-type="phone">
+                        <i class="fas fa-plus"></i>
+                        <span class="zh-only">添加电话</span>
+                        <span class="en-only">Add Phone</span>
+                    </button>
                 </div>
-                <div class="contact-block">
-                    <i class="fas fa-clock"></i>
-                    <div class="contact-data">
-                        <span class="contact-label zh-only">客服时间</span>
-                        <span class="contact-label en-only">Service Hours</span>
-                        <span class="contact-value editable" id="contactHours" contenteditable="false">9:00 - 18:00 (Mon-Fri)</span>
+
+                <!-- 微信列表（支持二维码） -->
+                <div class="contact-category">
+                    <div class="category-title">
+                        <i class="fab fa-weixin"></i>
+                        <span class="zh-only">微信</span>
+                        <span class="en-only">WeChat</span>
                     </div>
+                    <div class="contact-items" id="wechatList"></div>
+                    <button class="add-contact-btn" id="addWechatBtn" data-type="wechat">
+                        <i class="fas fa-plus"></i>
+                        <span class="zh-only">添加微信</span>
+                        <span class="en-only">Add WeChat</span>
+                    </button>
+                </div>
+
+                <!-- 工作时间 -->
+                <div class="contact-category">
+                    <div class="category-title">
+                        <i class="fas fa-clock"></i>
+                        <span class="zh-only">工作时间</span>
+                        <span class="en-only">Working Hours</span>
+                    </div>
+                    <div class="contact-items" id="hoursList"></div>
                 </div>
             </div>
         </div>
@@ -832,7 +882,36 @@
             let isAdmin = false;
             let currentLang = 'zh';
             let products = [];
+            let contacts = {
+                emails: [
+                    { id: 'e1', value: 'ryz.sales@ryz.com', label: '销售部' },
+                    { id: 'e2', value: 'ryz.support@ryz.com', label: '技术支持' }
+                ],
+                phones: [
+                    { id: 'p1', value: '+86 512-8823 9921', label: '总机' },
+                    { id: 'p2', value: '+86 512-8823 9922', label: '销售热线' }
+                ],
+                wechats: [
+                    { 
+                        id: 'w1', 
+                        value: 'ryz_official', 
+                        label: '官方微信',
+                        qrCode: null 
+                    },
+                    { 
+                        id: 'w2', 
+                        value: 'ryz_sales', 
+                        label: '销售微信',
+                        qrCode: null 
+                    }
+                ],
+                hours: [
+                    { id: 'h1', value: '周一至周五 9:00-18:00', label: '工作日' }
+                ]
+            };
+            
             let activeImageCardIndex = null;
+            let activeWechatId = null; // 当前正在上传二维码的微信ID
 
             // DOM 元素
             const adminLoginBtn = document.getElementById('adminLoginBtn');
@@ -844,29 +923,32 @@
             const adminLogoutBtn = document.getElementById('adminLogoutBtn');
             const companyIntroZh = document.getElementById('companyIntroZh');
             const companyIntroEn = document.getElementById('companyIntroEn');
-            const contactEmail = document.getElementById('contactEmail');
-            const contactPhone = document.getElementById('contactPhone');
-            const contactHours = document.getElementById('contactHours');
             const productGrid = document.getElementById('productGrid');
             const addProductContainer = document.getElementById('addProductContainer');
             const addProductBtn = document.getElementById('addProductBtn');
             const imageUpload = document.getElementById('imageUpload');
             const qrUpload = document.getElementById('qrUpload');
             const logoUpload = document.getElementById('logoUpload');
-            const wechatQRImage = document.getElementById('wechatQRImage');
-            const qrUploadHint = document.getElementById('qrUploadHint');
             const companyLogo = document.getElementById('companyLogo');
             const langZh = document.getElementById('langZh');
             const langEn = document.getElementById('langEn');
             const body = document.body;
 
+            // 联系人列表容器
+            const emailList = document.getElementById('emailList');
+            const phoneList = document.getElementById('phoneList');
+            const wechatList = document.getElementById('wechatList');
+            const hoursList = document.getElementById('hoursList');
+
+            // 添加按钮
+            const addEmailBtn = document.getElementById('addEmailBtn');
+            const addPhoneBtn = document.getElementById('addPhoneBtn');
+            const addWechatBtn = document.getElementById('addWechatBtn');
+
             // 所有可编辑元素的数组
             const editableElements = [
                 companyIntroZh,
-                companyIntroEn,
-                contactEmail,
-                contactPhone,
-                contactHours
+                companyIntroEn
             ];
 
             // 初始化产品数据
@@ -919,12 +1001,14 @@
                     products = defaultProducts;
                 }
                 
-                // 二维码
-                const savedQR = localStorage.getItem('ryz_wechat_qr');
-                if (savedQR) {
-                    wechatQRImage.src = savedQR;
-                    wechatQRImage.style.display = 'block';
-                    qrUploadHint.style.display = 'none';
+                // 联系人数据
+                const savedContacts = localStorage.getItem('ryz_contacts');
+                if (savedContacts) {
+                    try {
+                        contacts = JSON.parse(savedContacts);
+                    } catch (e) {
+                        // 使用默认数据
+                    }
                 }
 
                 // Logo
@@ -940,16 +1024,6 @@
                 
                 const savedIntroEn = localStorage.getItem('ryz_intro_en');
                 if (savedIntroEn) companyIntroEn.innerHTML = savedIntroEn;
-                
-                // 联系方式
-                const savedEmail = localStorage.getItem('ryz_email');
-                if (savedEmail) contactEmail.textContent = savedEmail;
-                
-                const savedPhone = localStorage.getItem('ryz_phone');
-                if (savedPhone) contactPhone.textContent = savedPhone;
-                
-                const savedHours = localStorage.getItem('ryz_hours');
-                if (savedHours) contactHours.textContent = savedHours;
             }
 
             // 保存所有数据
@@ -958,18 +1032,222 @@
                 localStorage.setItem('ryz_intro_zh', companyIntroZh.innerHTML);
                 localStorage.setItem('ryz_intro_en', companyIntroEn.innerHTML);
                 
-                // 联系方式
-                localStorage.setItem('ryz_email', contactEmail.textContent);
-                localStorage.setItem('ryz_phone', contactPhone.textContent);
-                localStorage.setItem('ryz_hours', contactHours.textContent);
+                // 联系人数据
+                localStorage.setItem('ryz_contacts', JSON.stringify(contacts));
                 
                 // 产品数据
-                saveProducts();
+                localStorage.setItem('ryz_products', JSON.stringify(products));
             }
 
             // 保存产品数据
             function saveProducts() {
                 localStorage.setItem('ryz_products', JSON.stringify(products));
+            }
+
+            // 渲染联系人
+            function renderContacts() {
+                // 渲染邮箱
+                emailList.innerHTML = '';
+                contacts.emails.forEach(email => {
+                    const card = createContactCard('envelope', email, 'email');
+                    emailList.appendChild(card);
+                });
+
+                // 渲染电话
+                phoneList.innerHTML = '';
+                contacts.phones.forEach(phone => {
+                    const card = createContactCard('phone', phone, 'phone');
+                    phoneList.appendChild(card);
+                });
+
+                // 渲染微信
+                wechatList.innerHTML = '';
+                contacts.wechats.forEach(wechat => {
+                    const card = createWechatCard(wechat);
+                    wechatList.appendChild(card);
+                });
+
+                // 渲染工作时间
+                hoursList.innerHTML = '';
+                contacts.hours.forEach(hour => {
+                    const card = createContactCard('clock', hour, 'hours');
+                    hoursList.appendChild(card);
+                });
+            }
+
+            // 创建普通联系人卡片
+            function createContactCard(icon, item, type) {
+                const card = document.createElement('div');
+                card.className = 'contact-item-card';
+                card.dataset.id = item.id;
+
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'contact-item-icon';
+                iconDiv.innerHTML = `<i class="fas fa-${icon}"></i>`;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'contact-item-content';
+
+                const labelSpan = document.createElement('div');
+                labelSpan.className = 'contact-item-label editable';
+                labelSpan.contentEditable = isAdmin;
+                labelSpan.textContent = item.label;
+
+                const valueSpan = document.createElement('div');
+                valueSpan.className = 'contact-item-value editable';
+                valueSpan.contentEditable = isAdmin;
+                valueSpan.textContent = item.value;
+
+                contentDiv.appendChild(labelSpan);
+                contentDiv.appendChild(valueSpan);
+
+                card.appendChild(iconDiv);
+                card.appendChild(contentDiv);
+
+                // 删除按钮
+                if (isAdmin) {
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.className = 'delete-contact';
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        deleteContact(type, item.id);
+                    };
+                    card.appendChild(deleteBtn);
+                }
+
+                return card;
+            }
+
+            // 创建微信卡片（支持二维码）
+            function createWechatCard(wechat) {
+                const card = document.createElement('div');
+                card.className = 'contact-item-card';
+                card.dataset.id = wechat.id;
+
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'contact-item-icon';
+                iconDiv.innerHTML = '<i class="fab fa-weixin"></i>';
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'contact-item-content';
+
+                const labelSpan = document.createElement('div');
+                labelSpan.className = 'contact-item-label editable';
+                labelSpan.contentEditable = isAdmin;
+                labelSpan.textContent = wechat.label;
+
+                const wechatContainer = document.createElement('div');
+                wechatContainer.className = 'wechat-qr-container';
+
+                // 微信ID
+                const wechatInfo = document.createElement('div');
+                wechatInfo.className = 'wechat-info';
+                
+                const idSpan = document.createElement('div');
+                idSpan.className = 'wechat-id editable';
+                idSpan.contentEditable = isAdmin;
+                idSpan.textContent = wechat.value;
+                
+                wechatInfo.appendChild(idSpan);
+
+                // 二维码
+                if (wechat.qrCode) {
+                    const qrImg = document.createElement('img');
+                    qrImg.src = wechat.qrCode;
+                    qrImg.className = 'wechat-qr-image qr-code-image';
+                    qrImg.alt = '微信二维码';
+                    qrImg.onclick = () => {
+                        if (isAdmin) {
+                            activeWechatId = wechat.id;
+                            qrUpload.click();
+                        }
+                    };
+                    wechatContainer.appendChild(qrImg);
+                } else {
+                    const hintSpan = document.createElement('span');
+                    hintSpan.className = 'qr-upload-hint';
+                    hintSpan.innerHTML = isAdmin ? '<span class="zh-only">点击上传二维码</span><span class="en-only">Click to upload QR</span>' : '';
+                    hintSpan.onclick = () => {
+                        if (isAdmin) {
+                            activeWechatId = wechat.id;
+                            qrUpload.click();
+                        }
+                    };
+                    wechatContainer.appendChild(hintSpan);
+                }
+
+                wechatContainer.appendChild(wechatInfo);
+                contentDiv.appendChild(labelSpan);
+                contentDiv.appendChild(wechatContainer);
+
+                card.appendChild(iconDiv);
+                card.appendChild(contentDiv);
+
+                // 删除按钮
+                if (isAdmin) {
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.className = 'delete-contact';
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        deleteContact('wechat', wechat.id);
+                    };
+                    card.appendChild(deleteBtn);
+                }
+
+                return card;
+            }
+
+            // 删除联系人
+            function deleteContact(type, id) {
+                if (!isAdmin) return;
+                if (confirm(currentLang === 'zh' ? '确定要删除这个联系人吗？' : 'Are you sure to delete this contact?')) {
+                    if (type === 'email') {
+                        contacts.emails = contacts.emails.filter(e => e.id !== id);
+                    } else if (type === 'phone') {
+                        contacts.phones = contacts.phones.filter(p => p.id !== id);
+                    } else if (type === 'wechat') {
+                        contacts.wechats = contacts.wechats.filter(w => w.id !== id);
+                    }
+                    saveAllData();
+                    renderContacts();
+                }
+            }
+
+            // 添加联系人
+            function addContact(type) {
+                if (!isAdmin) return;
+                
+                let newContact;
+                const newId = type + Date.now();
+                
+                if (type === 'email') {
+                    newContact = {
+                        id: newId,
+                        value: 'new@email.com',
+                        label: '新邮箱'
+                    };
+                    contacts.emails.push(newContact);
+                } else if (type === 'phone') {
+                    newContact = {
+                        id: newId,
+                        value: '+86 123-4567 8901',
+                        label: '新电话'
+                    };
+                    contacts.phones.push(newContact);
+                } else if (type === 'wechat') {
+                    newContact = {
+                        id: newId,
+                        value: 'new_wechat',
+                        label: '新微信',
+                        qrCode: null
+                    };
+                    contacts.wechats.push(newContact);
+                }
+                
+                saveAllData();
+                renderContacts();
             }
 
             // 渲染产品网格
@@ -1087,7 +1365,7 @@
                 renderProducts();
             }
 
-            // 设置编辑状态 - 核心修复函数
+            // 设置编辑状态
             function setEditMode(enabled) {
                 isAdmin = enabled;
                 
@@ -1114,16 +1392,12 @@
                     addProductContainer.style.display = 'none';
                 }
                 
-                // 重新渲染产品（更新可编辑状态）
+                // 重新渲染产品和联系人
                 renderProducts();
+                renderContacts();
                 
                 // 更新上传区域的样式和功能
                 updateUploadElements(enabled);
-                
-                // 保存当前状态到localStorage（可选）
-                localStorage.setItem('ryz_admin_mode', enabled);
-                
-                console.log('管理员模式:', enabled ? '开启' : '关闭');
             }
 
             // 更新上传元素的样式和功能
@@ -1135,17 +1409,6 @@
                 } else {
                     companyLogo.classList.remove('admin-mode');
                     companyLogo.style.cursor = 'default';
-                }
-                
-                // 二维码
-                if (enabled) {
-                    wechatQRImage.style.cursor = 'pointer';
-                    if (!qrImageData) {
-                        qrUploadHint.style.display = 'block';
-                    }
-                } else {
-                    wechatQRImage.style.cursor = 'default';
-                    qrUploadHint.style.display = 'none';
                 }
             }
 
@@ -1173,11 +1436,9 @@
                 langZh.classList.toggle('active', lang === 'zh');
                 langEn.classList.toggle('active', lang === 'en');
                 
-                // 重新渲染产品以更新提示文字
+                // 重新渲染以更新提示文字
                 renderProducts();
-                
-                // 更新上传提示文字
-                updateUploadElements(isAdmin);
+                renderContacts();
             }
 
             // 事件监听设置
@@ -1223,6 +1484,11 @@
 
                 // 添加产品按钮
                 addProductBtn.addEventListener('click', addProduct);
+
+                // 添加联系人按钮
+                addEmailBtn.addEventListener('click', () => addContact('email'));
+                addPhoneBtn.addEventListener('click', () => addContact('phone'));
+                addWechatBtn.addEventListener('click', () => addContact('wechat'));
 
                 // Logo上传
                 companyLogo.addEventListener('click', () => {
@@ -1276,7 +1542,7 @@
                 // 二维码上传
                 qrUpload.addEventListener('change', function(event) {
                     const file = event.target.files[0];
-                    if (!file || !isAdmin) return;
+                    if (!file || !activeWechatId || !isAdmin) return;
 
                     if (!file.type.startsWith('image/')) {
                         alert(currentLang === 'zh' ? '请选择一个图片文件作为二维码' : 'Please select an image for QR code');
@@ -1286,38 +1552,45 @@
 
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        wechatQRImage.src = e.target.result;
-                        wechatQRImage.style.display = 'block';
-                        qrUploadHint.style.display = 'none';
-                        localStorage.setItem('ryz_wechat_qr', e.target.result);
+                        // 找到对应的微信并更新二维码
+                        const wechat = contacts.wechats.find(w => w.id === activeWechatId);
+                        if (wechat) {
+                            wechat.qrCode = e.target.result;
+                            saveAllData();
+                            renderContacts();
+                        }
                         qrUpload.value = '';
+                        activeWechatId = null;
                     };
                     reader.readAsDataURL(file);
-                });
-
-                // 二维码点击
-                wechatQRImage.addEventListener('click', () => {
-                    if (isAdmin) qrUpload.click();
-                });
-
-                qrUploadHint.addEventListener('click', () => {
-                    if (isAdmin) qrUpload.click();
                 });
 
                 // 监听内容变化，自动保存
                 document.addEventListener('blur', function(e) {
                     if (e.target.classList.contains('editable') && e.target.contentEditable === 'true' && isAdmin) {
-                        saveAllData();
-                    }
-                }, true);
-
-                // 监听输入事件，实时保存
-                document.addEventListener('input', function(e) {
-                    if (e.target.classList.contains('editable') && e.target.contentEditable === 'true' && isAdmin) {
-                        // 实时更新products数组中的对应数据
-                        const card = e.target.closest('.product-card');
+                        // 更新联系人数据
+                        const card = e.target.closest('.contact-item-card');
                         if (card) {
-                            const index = parseInt(card.dataset.index);
+                            const id = card.dataset.id;
+                            const type = card.querySelector('.contact-item-icon i').className.includes('envelope') ? 'emails' :
+                                        card.querySelector('.contact-item-icon i').className.includes('phone') ? 'phones' :
+                                        card.querySelector('.contact-item-icon i').className.includes('weixin') ? 'wechats' : 'hours';
+                            
+                            const item = contacts[type]?.find(c => c.id === id);
+                            if (item) {
+                                if (e.target.classList.contains('contact-item-label')) {
+                                    item.label = e.target.textContent;
+                                } else if (e.target.classList.contains('contact-item-value') || e.target.classList.contains('wechat-id')) {
+                                    item.value = e.target.textContent;
+                                }
+                                saveAllData();
+                            }
+                        }
+                        
+                        // 更新产品数据
+                        const productCard = e.target.closest('.product-card');
+                        if (productCard) {
+                            const index = parseInt(productCard.dataset.index);
                             if (!isNaN(index) && products[index]) {
                                 if (e.target.classList.contains('product-title-zh')) {
                                     products[index].titleZh = e.target.textContent;
@@ -1330,8 +1603,10 @@
                                 }
                                 saveProducts();
                             }
-                        } else {
-                            // 非产品数据，直接保存
+                        }
+                        
+                        // 公司介绍
+                        if (e.target.id === 'companyIntroZh' || e.target.id === 'companyIntroEn') {
                             saveAllData();
                         }
                     }
@@ -1342,6 +1617,7 @@
             function init() {
                 loadSavedData();
                 renderProducts();
+                renderContacts();
                 setLanguage('zh');
                 setupEventListeners();
                 
